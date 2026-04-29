@@ -489,6 +489,27 @@ function selectCell(cellId) {
     showMiningPopup(cell, team);
 }
 
+function simulateMining(totalValue, destroyPerDay, minePerDay) {
+    let remaining = totalValue;
+    let destroyed = 0;
+    let extracted = 0;
+    let days = 0;
+    
+    while (remaining > 0) {
+        days++;
+        // Destroy first
+        let toDestroy = Math.min(destroyPerDay, remaining);
+        destroyed += toDestroy;
+        remaining -= toDestroy;
+        // Then mine
+        let toMine = Math.min(minePerDay, remaining);
+        extracted += toMine;
+        remaining -= toMine;
+    }
+    
+    return { days, destroyed, extracted };
+}
+
 function showMiningPopup(cell, team) {
     document.getElementById('miningOverlay').style.display = 'block';
     let popup = document.getElementById('miningPopup');
@@ -511,25 +532,16 @@ function showMiningPopup(cell, team) {
     
     let totalValue = cell.anova;
     
-    // FAST: DESTROY, DESTROY, DESTROY, MINE, MINE, MINE (3 destroy first, then 3 mine)
-    // Each day destroys 3, mines 3 = 6 total processed
-    let fastDays = Math.ceil(totalValue / 6);
-    let fastDestroyed = Math.min(fastDays * 3, totalValue);
-    let fastExtracted = Math.min(totalValue - fastDestroyed, fastDays * 3);
-    
-    // MEDIUM: DESTROY, MINE, MINE (1 destroy first, then 2 mine per day = 3 total per day)
-    let mediumDays = Math.ceil(totalValue / 3);
-    let mediumDestroyed = Math.min(mediumDays * 1, totalValue);
-    let mediumExtracted = totalValue - mediumDestroyed;
-    
-    // CAREFUL: mine 1, destroy 0 per day
+    // Day-by-day simulation: destroy comes first each day
+    let fastResult = simulateMining(totalValue, 3, 3);   // FAST: destroy 3, mine 3
+    let mediumResult = simulateMining(totalValue, 1, 2);  // MEDIUM: destroy 1, mine 2
     let carefulDays = totalValue;
     let carefulExtracted = totalValue;
     
     document.getElementById('popupFastStats').innerHTML = 
-        `<span style="color:#ffffff;font-size:1.2rem;font-weight:700">${fastDays} days</span><br><span style="color:#ff4444;font-size:1.1rem;font-weight:700">-${fastDestroyed}</span> <span style="color:#888">/</span> <span style="color:#00ff88;font-size:1.1rem;font-weight:700">+${fastExtracted}</span>`;
+        `<span style="color:#ffffff;font-size:1.2rem;font-weight:700">${fastResult.days} days</span><br><span style="color:#ff4444;font-size:1.1rem;font-weight:700">-${fastResult.destroyed}</span> <span style="color:#888">/</span> <span style="color:#00ff88;font-size:1.1rem;font-weight:700">+${fastResult.extracted}</span>`;
     document.getElementById('popupMediumStats').innerHTML = 
-        `<span style="color:#ffffff;font-size:1.2rem;font-weight:700">${mediumDays} days</span><br><span style="color:#ff4444;font-size:1.1rem;font-weight:700">-${mediumDestroyed}</span> <span style="color:#888">/</span> <span style="color:#00ff88;font-size:1.1rem;font-weight:700">+${mediumExtracted}</span>`;
+        `<span style="color:#ffffff;font-size:1.2rem;font-weight:700">${mediumResult.days} days</span><br><span style="color:#ff4444;font-size:1.1rem;font-weight:700">-${mediumResult.destroyed}</span> <span style="color:#888">/</span> <span style="color:#00ff88;font-size:1.1rem;font-weight:700">+${mediumResult.extracted}</span>`;
     document.getElementById('popupSlowStats').innerHTML = 
         `<span style="color:#ffffff;font-size:1.2rem;font-weight:700">${carefulDays} days</span><br><span style="color:#ff4444;font-size:1.1rem;font-weight:700">-0</span> <span style="color:#888">/</span> <span style="color:#00ff88;font-size:1.1rem;font-weight:700">+${carefulExtracted}</span>`;
 }
@@ -623,15 +635,15 @@ function showMiningAnimation(speed) {
     let totalValue = cell.anova;
     
     if (speed === 'fast') {
-        // DESTROY, DESTROY, DESTROY, then MINE, MINE, MINE - each day processes 6 total (3 destroy, 3 mine)
-        days = Math.ceil(totalValue / 6);
-        destroyed = Math.min(days * 3, totalValue);
-        extracted = Math.min(totalValue - destroyed, days * 3);
+        let result = simulateMining(totalValue, 3, 3);
+        days = result.days;
+        destroyed = result.destroyed;
+        extracted = result.extracted;
     } else if (speed === 'medium') {
-        // DESTROY, MINE, MINE per day (1 destroy first, then 2 mine = 3 total per day)
-        days = Math.ceil(totalValue / 3);
-        destroyed = Math.min(days * 1, totalValue);
-        extracted = totalValue - destroyed;
+        let result = simulateMining(totalValue, 1, 2);
+        days = result.days;
+        destroyed = result.destroyed;
+        extracted = result.extracted;
     } else { // careful
         days = totalValue;
         extracted = totalValue;
