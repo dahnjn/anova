@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ANOVA</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'IBM Plex Sans',sans-serif;background:#0a0a0f;color:#e0e0e0;height:100vh;overflow:hidden}.game-container{max-width:1400px;margin:0 auto;padding:8px 10px 10px 10px;height:100vh;display:flex;flex-direction:column}header{text-align:center;margin-bottom:8px}h1{font-family:'IBM Plex Mono',monospace;font-size:4.6rem;font-weight:700;letter-spacing:0.345em;color:#ffffff;margin-bottom:2px;text-shadow:0 0 10px #fff,0 0 20px #00ffff,0 0 30px #00ffff,0 0 40px #00ffff}.subtitle{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:#666;letter-spacing:0.2em}.header-stats-stacked{margin-top:10px;display:flex;flex-direction:row;justify-content:space-around;align-items:center;gap:20px;flex-wrap:wrap}.header-stat-row{display:flex;flex-direction:column;align-items:center;gap:4px}.stat-label{font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#888;letter-spacing:0.1em}.stat-value{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:700}.day-value{color:#00ffff;text-shadow:0 0 20px rgba(0,255,255,0.5)}.destroyed-value{color:#ff4444;text-shadow:0 0 20px rgba(255,68,68,0.5)}.header-current-tranche{margin-top:8px;text-align:center;min-width:350px}.current-tranche-label{font-family:'Courier New',Courier,monospace;font-size:0.85rem;color:#888;margin-bottom:6px}.current-tranche-label span:first-of-type{color:#fff;font-weight:700;font-size:1rem}.current-tranche-penalty{color:#ff4444!important;font-weight:400!important}.current-tranche-bar-container{height:28px;background:rgba(255,255,255,0.08);border-radius:6px;overflow:hidden;border:2px solid rgba(255,255,255,0.3);display:flex;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 2px 8px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -1px 0 rgba(0,0,0,0.1)}.current-tranche-bar{display:flex;height:100%;width:100%;transition:width 0.3s}.current-tranche-segment{height:100%;min-width:2px;position:relative;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:0.9rem;font-weight:700;color:#000;text-shadow:0 0 2px rgba(255,255,255,0.5)}.current-tranche-legend{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:6px;font-family:'Courier New',Courier,monospace;font-size:0.7rem}.current-legend-item{display:flex;align-items:center;gap:4px;color:#aaa}.current-legend-color{width:10px;height:10px;border-radius:2px}.header-buttons{display:flex;justify-content:center;gap:10px;margin-top:10px}.header-btn{padding:6px 14px;background:rgba(20,20,30,0.8);border:1px solid #4a4a6a;border-radius:6px;color:#aaa;font-family:'Courier New',Courier,monospace;font-size:0.75rem;cursor:pointer;transition:all 0.2s}.header-btn:hover{background:rgba(40,40,60,0.9);border-color:#00ffff;color:#fff}.main-layout{display:grid;grid-template-columns:260px 1fr 250px;gap:12px;flex:1;min-height:0}.teams-panel{background:#12121a;border-radius:10px;padding:12px;border:1px solid #2a2a3a;overflow-y:auto}.panel-title{font-family:'Courier New',Courier,monospace;font-size:0.75rem;color:#888;letter-spacing:0.15em;margin-bottom:10px;text-transform:uppercase}.create-team-form{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}.create-team-input-row{display:flex;gap:6px}.create-team-form input{flex:1;padding:8px 10px;background:#1a1a24;border:1px solid #3a3a4a;border-radius:5px;color:#fff;font-family:'Courier New',Courier,monospace;font-size:0.8rem}.create-team-form input:focus{outline:none;border-color:#00ffff}.btn{padding:8px 12px;border:none;border-radius:5px;font-family:'Courier New',Courier,monospace;font-size:0.75rem;cursor:pointer;transition:all 0.2s;font-weight:600}.btn-primary{background:linear-gradient(135deg,#00ffff,#00cccc);color:#000}.btn-primary:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,255,255,0.3)}.team-list{display:flex;flex-direction:column;gap:6px}.team-card{background:#1a1a24;border-radius:6px;padding:8px;border:2px solid transparent;cursor:pointer;transition:all 0.2s}.team-card:hover{border-color:#3a3a5a}.team-card.active{border-color:#00ffff;box-shadow:0 0 20px rgba(0,255,255,0.2)}.team-card.mining{opacity:0.6}.team-name{font-weight:600;font-size:0.85rem;margin-bottom:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}.team-status{font-size:0.6rem;padding:2px 5px;border-radius:3px;background:#2a2a3a}.team-status.ready{background:#00ff8833;color:#00ff88}.team-status.mining{background:#ffff0033;color:#ffff00}.team-stats{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:#888;display:grid;grid-template-columns:1fr 1fr;gap:3px}.stat-extracted{color:#00ff88}.stat-destroyed{color:#ff4444}.planet-container{background:#12121a;border-radius:10px;padding:20px;border:1px solid #2a2a3a;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative;background-image:radial-gradient(1px 1px at 20px 30px,rgba(255,255,255,0.5),transparent),radial-gradient(1px 1px at 40px 70px,rgba(255,255,255,0.4),transparent);background-color:#0d0d18}.planet-wrapper{position:relative;display:flex;align-items:center;justify-content:center;padding:12px}.planet-arrows-container{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2}.planet-backdrop{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(ellipse at 30% 25%,var(--planet-light) 0%,var(--planet-mid) 20%,var(--planet-dark) 40%,var(--planet-darker) 60%,var(--planet-darkest) 80%,#000 100%);box-shadow:inset -80px -60px 120px rgba(0,0,0,0.9),inset 40px 30px 80px var(--planet-highlight);pointer-events:none;z-index:0}.atmosphere{position:absolute;width:520px;height:520px;border-radius:50%;background:transparent;box-shadow:0 0 100px var(--planet-glow-inner),0 0 150px var(--planet-glow-mid),0 0 200px var(--planet-glow-outer),inset 0 0 60px var(--planet-glow-inner);pointer-events:none;z-index:0;border:1px solid var(--planet-glow-outer)}.planet-grid{display:flex;flex-direction:column;align-items:center;gap:32px;position:relative;z-index:1}.planet-row{display:flex;gap:32px;justify-content:center;position:relative}.cell{width:42px;height:42px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:0.75rem;cursor:pointer;transition:all 0.15s;position:relative;border:2px solid rgba(255,255,255,0.7);background:rgba(255,255,255,0.45);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#1a1a2e;font-weight:600;box-shadow:0 4px 12px rgba(255,255,255,0.3),inset 0 2px 0 rgba(255,255,255,0.5),inset 0 -2px 0 rgba(0,0,0,0.1)}.cell .anova-value{display:none;font-weight:900;font-size:1.2rem;color:#00ffff;text-shadow:0 0 8px rgba(0,255,255,0.6);line-height:1}.cell.show-value .anova-value{display:block}.cell.show-value .cell-id{display:none}.cell.mined.show-mined-value .anova-value{display:block!important}.cell.mined.show-mined-value .cell-id{display:none!important}.cell.mined.show-mined-value{opacity:1;box-shadow:0 0 8px rgba(255,255,255,0.5)}.planet-grid.show-mined-mode .cell:not(.mined){opacity:0.25}.planet-grid.show-mined-mode .cell.mined{opacity:1}.cell.mined{opacity:0.9;cursor:help;background:rgba(20,20,30,0.85);border-width:3px}.cell.mined .anova-value{display:block!important}.cell.mined .cell-id{display:none!important}.cell.mined:hover{transform:scale(1.3);opacity:0.8;background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.4)}.cell.closed{opacity:0.6;cursor:not-allowed;filter:grayscale(100%);background:rgba(20,20,20,0.9);border:2px solid rgba(255,255,255,0.2)}.cell.closed:hover{transform:none;border:2px solid rgba(255,255,255,0.2)}.cell.closed .anova-value{display:block!important;color:#ffffff!important;text-shadow:0 0 12px rgba(255,255,255,0.8), 0 2px 6px rgba(0,0,0,1), 1px 1px 0 rgba(0,0,0,1), -1px -1px 0 rgba(0,0,0,1)!important;font-size:1.1rem!important;font-weight:900!important}.cell.closed .cell-id{display:none!important}.cell.selected{border:3px solid rgba(255,255,255,0.9);transform:scale(1.2);z-index:5;background:rgba(255,255,255,0.2);box-shadow:0 8px 24px rgba(255,255,255,0.3),inset 0 2px 0 rgba(255,255,255,0.5),inset 0 -2px 0 rgba(0,0,0,0.2)}.zero-arrow{position:absolute;font-size:1.5rem;color:#ff4444;text-shadow:0 0 10px rgba(255,68,68,1);z-index:10;pointer-events:none;font-weight:bold}.info-panel{background:#12121a;border-radius:10px;padding:12px;border:1px solid #2a2a3a;overflow-y:auto}.action-panel{background:#1a1a24;border-radius:6px;padding:10px;margin-bottom:10px}.action-title{font-size:0.8rem;margin-bottom:8px;color:#aaa}.selected-cell-info{font-family:'Courier New',Courier,monospace;font-size:1rem;margin-bottom:10px}.anova-amount{font-size:1.5rem;font-weight:700;color:#00ff88;text-align:center;margin:10px 0}.btn-pass{width:100%;padding:8px;background:#3a3a4a;color:#aaa}.btn-pass:hover{background:#4a4a5a}.game-log{margin-top:10px;max-height:120px;overflow-y:auto}.log-entry{font-family:'Courier New',Courier,monospace;font-size:0.65rem;padding:4px 6px;border-left:2px solid #3a3a4a;margin-bottom:3px;color:#888}.log-entry.extract{border-color:#00ff88}.log-entry.destroy{border-color:#ff4444}.log-entry.move{border-color:#00ffff}.winner-banner{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#1a1a24;border:3px solid #00ff88;border-radius:16px;padding:40px 60px;text-align:center;z-index:100;box-shadow:0 0 60px rgba(0,255,136,0.5);max-width:90vw;max-height:90vh;overflow-y:auto}.winner-banner h2{font-family:'Courier New',Courier,monospace;font-size:3rem;color:#00ff88;margin-bottom:15px;text-transform:uppercase;letter-spacing:0.2em;display:none}.winner-banner .winner-name{font-size:2rem;margin-bottom:30px;font-weight:700}.winner-banner .btn{margin-top:20px}.stats-section{margin:30px 0}.stats-title{font-family:'Courier New',Courier,monospace;font-size:1.2rem;color:#ffffff;font-weight:700;margin-bottom:15px;text-transform:uppercase;letter-spacing:0.1em}.speed-chart-container{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}.team-speed-chart{background:#12121a;border-radius:8px;padding:15px;min-width:200px}.team-speed-chart-title{font-family:'IBM Plex Mono',monospace;font-size:0.9rem;color:#aaa;margin-bottom:10px}.speed-bars{display:flex;flex-direction:column;gap:8px}.speed-bar-row{display:flex;align-items:center;gap:8px}.speed-label{font-family:'IBM Plex Mono',monospace;font-size:0.75rem;width:70px;text-align:right}.speed-label.fast{color:#ff4444}.speed-label.medium{color:#ffaa00}.speed-label.slow{color:#00ff88}.speed-bar{height:20px;border-radius:4px;transition:width 0.3s;min-width:20px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;color:#000}.speed-bar.fast{background:#ff4444}.speed-bar.medium{background:#ffaa00}.speed-bar.slow{background:#00ff88}.line-graph-container{background:#12121a;border-radius:8px;padding:20px;margin:20px auto;max-width:100%;width:100%}.line-graph{position:relative;height:500px;border-left:2px solid #4a4a5a;border-bottom:2px solid #4a4a5a}.line-graph-grid{position:absolute;width:100%;height:100%}.grid-line{position:absolute;width:100%;height:1px;background:#2a2a3a;left:0}.line-graph-lines{position:absolute;width:100%;height:100%}.score-line{position:absolute;stroke-width:2;fill:none}.line-graph-labels{position:relative;display:flex;justify-content:space-between;margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:#666}.line-graph-y-label{position:absolute;left:-40px;font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:#666}.line-graph-legend{display:flex;justify-content:center;gap:15px;margin-top:15px;flex-wrap:wrap}.legend-item-graph{display:flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:0.8rem}.legend-line{width:30px;height:3px;border-radius:2px}.overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:99}.leaderboard{margin-top:8px}.leaderboard-entry{display:flex;justify-content:space-between;padding:5px;background:#1a1a24;border-radius:4px;margin-bottom:3px;font-family:'IBM Plex Mono',monospace;font-size:0.7rem}.leaderboard-entry.leader{border:1px solid #00ff88}.no-team-selected{color:#666;text-align:center;padding:20px 10px;font-style:italic}.end-game-btn{margin-top:10px;width:100%;background:#ff444433;color:#ff4444;border:1px solid #ff4444}.end-game-btn:hover{background:#ff444466}.tranche-visual{margin-top:10px;max-height:150px;overflow-y:auto}.tranche-block{margin-bottom:8px;padding:6px;background:#1a1a24;border-radius:4px;border-left:3px solid #3a3a4a}.tranche-block.complete{border-left-color:#ff4444}.tranche-header{font-family:'Courier New',Courier,monospace;font-size:0.7rem;color:#888;margin-bottom:4px;display:flex;justify-content:space-between}.tranche-penalty{color:#ff4444}.tranche-bar-container{height:12px;background:#2a2a3a;border-radius:2px;display:flex;overflow:hidden}.tranche-segment{height:100%;transition:width 0.3s}.tranche-legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;font-size:0.6rem;font-family:'Courier New',Courier,monospace}.legend-item{display:flex;align-items:center;gap:3px;color:#aaa}.legend-color{width:8px;height:8px;border-radius:2px}.mining-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:1000;backdrop-filter:blur(4px)}.mining-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.8);background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);border:3px solid #00ffff;border-radius:16px;padding:24px;z-index:1001;min-width:550px;box-shadow:0 0 40px rgba(0,255,255,0.3),inset 0 0 40px rgba(0,255,255,0.05);animation:popupAppear 0.3s ease-out forwards}@keyframes popupAppear{from{transform:translate(-50%,-50%) scale(0.8);opacity:0}to{transform:translate(-50%,-50%) scale(1);opacity:1}}.mining-popup-header{text-align:center;margin-bottom:16px}.popup-cell-id{font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:500;color:#888;margin-bottom:4px}.popup-anova-amount{font-family:'IBM Plex Mono',monospace;font-size:3rem;font-weight:700;color:#00ffff;text-shadow:0 0 30px rgba(0,255,255,0.6)}.mining-popup-team{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:0.9rem;color:#888;margin-bottom:20px}.mining-popup-team span{color:#00ff88}.mining-popup-options{display:flex;gap:12px;margin-bottom:16px}.popup-mining-btn{flex:1;background:linear-gradient(180deg,#2a2a3a 0%,#1a1a2a 100%);border:2px solid #ffffff;border-radius:12px;padding:16px 12px;cursor:pointer;transition:all 0.2s ease;text-align:center}.popup-mining-btn:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,0.3)}.popup-mining-btn.fast:hover{background:linear-gradient(180deg,#3a2a2a 0%,#2a1a1a 100%);box-shadow:0 8px 20px rgba(255,68,68,0.3)}.popup-mining-btn.medium:hover{background:linear-gradient(180deg,#3a3a2a 0%,#2a2a1a 100%);box-shadow:0 8px 20px rgba(255,170,0,0.3)}.popup-mining-btn.slow:hover{background:linear-gradient(180deg,#2a3a2a 0%,#1a2a1a 100%);box-shadow:0 8px 20px rgba(0,255,136,0.3)}.popup-btn-icon{font-size:2rem;margin-bottom:8px}.popup-btn-title{font-family:'IBM Plex Mono',monospace;font-size:1rem;font-weight:700;color:#fff;margin-bottom:8px}.popup-btn-stats{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:#888;line-height:1.4}.popup-cancel-btn{width:100%;background:transparent;border:1px solid #444;border-radius:8px;padding:10px;color:#666;font-family:'IBM Plex Mono',monospace;font-size:0.8rem;cursor:pointer;transition:all 0.2s}.popup-cancel-btn:hover{border-color:#666;color:#888}.mining-animation{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:2000;display:flex;align-items:center;justify-content:center}.mining-animation-content{text-align:center;position:relative}.mining-drill{font-size:6rem;animation:drillBounce 0.3s ease-in-out infinite}@keyframes drillBounce{0%,100%{transform:translateY(0) rotate(-10deg)}50%{transform:translateY(-20px) rotate(10deg)}}.mining-sparks{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}.spark{position:absolute;width:8px;height:8px;background:#ffff00;border-radius:50%;animation:sparkFly 0.6s ease-out forwards}@keyframes sparkFly{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0}}.mining-result{margin-top:30px;font-family:'IBM Plex Mono',monospace;font-size:1.5rem;color:#fff;opacity:0;transform:translateY(20px);animation:resultAppear 0.5s ease-out 1s forwards}@keyframes resultAppear{to{opacity:1;transform:translateY(0)}}.result-extracted{color:#00ff88;font-size:2rem;font-weight:700;text-shadow:0 0 20px rgba(0,255,136,0.5)}.result-destroyed{color:#ff4444;font-size:1.2rem;margin-top:8px}.penalty-notification{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-100px);background:transparent;border:4px solid #ff4444;border-radius:12px;padding:20px 40px;z-index:500;box-shadow:0 8px 40px rgba(255,68,68,0.6),inset 0 0 40px rgba(255,68,68,0.2);animation:penaltySlideIn 0.5s ease-out forwards;min-width:400px;text-align:center;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}@keyframes penaltySlideIn{to{transform:translateX(-50%) translateY(0)}}.penalty-notification.hiding{animation:penaltySlideOut 0.5s ease-in forwards}@keyframes penaltySlideOut{to{transform:translateX(-50%) translateY(-100px);opacity:0}}.penalty-notification-icon{font-size:2.5rem;margin-bottom:8px}.penalty-notification-title{font-family:'IBM Plex Mono',monospace;font-size:1.2rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px}.penalty-notification-team{font-family:'IBM Plex Mono',monospace;font-size:1.5rem;font-weight:700;color:#ffff00;text-shadow:0 0 10px rgba(255,255,0,0.5);margin-bottom:8px}.penalty-notification-amount{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:700;color:#fff;text-shadow:0 0 20px rgba(255,255,255,0.5)}.penalty-notification-reason{font-family:'IBM Plex Mono',monospace;font-size:0.8rem;color:#ffcccc;margin-top:8px}</style>
+</head>
+<body>
+<div class="game-container">
+<header>
+<h1>ANOVA</h1>
+<div class="header-stats-stacked">
+<div class="header-stat-row"><span class="stat-label">DAY</span><span class="stat-value day-value" id="dayValue">1</span></div>
+<div class="header-stat-row"><span class="stat-label">TOTAL REMAINING</span><span class="stat-value" style="color:#ffff00;text-shadow:0 0 20px rgba(255,255,0,0.5)" id="remainingValue">0</span></div>
+<div class="header-stat-row"><span class="stat-label">TOTAL MINED</span><span class="stat-value" style="color:#00ff88;text-shadow:0 0 20px rgba(0,255,136,0.5)" id="minedValue">0</span></div>
+<div class="header-stat-row"><span class="stat-label">TOTAL DESTROYED</span><span class="stat-value destroyed-value" id="destroyedValue">0</span></div>
+<div class="header-stat-row"><span class="stat-label">TOTAL LOST</span><span class="stat-value" style="color:#888;text-shadow:0 0 20px rgba(136,136,136,0.5)" id="lostValue">0</span></div>
+</div>
+<div class="header-current-tranche"><div class="current-tranche-label">CURRENT TRANCHE: <span id="currentTrancheRange">1-100</span> <span class="current-tranche-penalty" id="currentTranchePenalty">(-10)</span></div><div class="current-tranche-bar-container"><div class="current-tranche-bar" id="currentTrancheBar"></div></div><div class="current-tranche-legend" id="currentTrancheLegend"></div></div>
+</header>
+<div class="main-layout">
+<div class="teams-panel">
+<div class="panel-title">Teams</div>
+<div class="create-team-form">
+<div class="create-team-input-row">
+<input type="text" id="teamNameInput" placeholder="Team name..." maxlength="12">
+<button class="btn btn-primary" onclick="createTeam()">+</button>
+</div>
+</div>
+<div class="team-list" id="teamList"></div>
+<div class="header-buttons" style="margin-top:15px">
+<button class="header-btn" onclick="saveGame()">SAVE</button>
+<label class="header-btn" style="cursor:pointer">
+LOAD
+<input type="file" id="loadGameInput" accept=".json" onchange="loadGame(event)" style="display:none">
+</label>
+</div>
+</div>
+<div class="planet-container">
+<div class="planet-wrapper">
+<div class="atmosphere"></div>
+<div class="planet-backdrop"></div>
+<div class="planet-arrows-container" id="planetArrows"></div>
+<div class="planet-grid" id="planetGrid"></div>
+</div>
+</div>
+<div class="info-panel">
+<div class="action-panel" id="actionPanel"><div class="no-team-selected">Create a team to begin mining operations</div></div>
+<div class="panel-title" style="margin-top:10px">Leaderboard</div>
+<div class="leaderboard" id="leaderboard"></div>
+<button class="btn end-game-btn" onclick="endGame()">END GAME</button>
+<div class="panel-title" style="margin-top:10px">Exhausted Tranches</div>
+<div class="tranche-visual" id="trancheVisual"></div>
+<div class="panel-title" style="margin-top:10px">Activity Log</div>
+<div class="game-log" id="gameLog"></div>
+</div>
+</div>
+</div>
+<div class="overlay" id="overlay" style="display:none"></div>
+<div class="winner-banner" id="winnerBanner" style="display:none">
+<h2>🏆 GAME OVER 🏆</h2>
+<div class="winner-name" id="winnerName"></div>
+<div id="finalScores"></div>
+<button class="btn btn-primary" onclick="resetGame()">NEW GAME</button>
+</div>
+<div class="mining-overlay" id="miningOverlay" style="display:none"></div>
+<div class="mining-popup" id="miningPopup" style="display:none">
+<div class="mining-popup-header"><div class="popup-cell-id" id="popupCellId">5A</div><div class="popup-anova-amount" id="popupAnovaAmount">89 ANOVA</div></div>
+<div class="mining-popup-team">Team: <span id="popupTeamName"></span></div>
+<div class="mining-popup-options">
+<button class="popup-mining-btn fast" onclick="selectMiningSpeed('fast')"><div class="popup-btn-title">FAST</div><div class="popup-btn-icon">🐇</div><div class="popup-btn-stats" id="popupFastStats"></div></button>
+<button class="popup-mining-btn medium" onclick="selectMiningSpeed('medium')"><div class="popup-btn-title">MEDIUM</div><div class="popup-btn-icon">🐢</div><div class="popup-btn-stats" id="popupMediumStats"></div></button>
+<button class="popup-mining-btn slow" onclick="selectMiningSpeed('slow')"><div class="popup-btn-title">CAREFUL</div><div class="popup-btn-icon">🐌</div><div class="popup-btn-stats" id="popupSlowStats"></div></button>
+</div>
+<button class="popup-cancel-btn" onclick="closeMiningPopup()">CANCEL</button>
+</div>
+<div class="mining-animation" id="miningAnimation" style="display:none"><div class="mining-animation-content"><div class="mining-drill">⛏️</div><div class="mining-sparks" id="miningSparks"></div><div class="mining-result" id="miningResult"></div></div></div>
+<div class="penalty-notification" id="penaltyNotification" style="display:none"><div class="penalty-notification-icon">⚠️</div><div class="penalty-notification-title">Tranche Penalty</div><div class="penalty-notification-team" id="penaltyTeamName"></div><div class="penalty-notification-amount" id="penaltyAmount"></div><div class="penalty-notification-reason" id="penaltyReason"></div></div>
+<script>
+let gameState = {
+    teams: [],
+    cells: {},
+    selectedTeam: null,
+    selectedCell: null,
+    currentDay: 1,
+    log: [],
+    gameOver: false,
+    trancheContributions: {},
+    totalLost: 0
+};
+
+let gameConfig = {
+    totalMines: 121,
+    rowCloseout: 5,
+    basePenalty: 10,
+    penaltyType: "add",
+    penaltyAdd: 10,
+    penaltyMultiply: 1.5,
+    dayLimit: 0
+};
+
+let teamColors = [
+    '#00FFFF', // Neon Cyan
+    '#FF00A8', // Neon Magenta
+    '#FFF700', // Neon Yellow
+    '#39FF14', // Neon Green
+    '#FF073A', // Neon Red
+    '#2979FF', // Neon Blue
+    '#B026FF', // Neon Purple
+    '#00FFB3', // Neon Mint
+    '#FF5F1F', // Neon Orange
+    '#FF1AFF', // Neon Pink
+    '#1ECFFF', // Neon Sky Blue
+    '#A7FF00'  // Neon Lime
+];
+
+let rowConfig = [
+    { row: 0, letters: "ABCDEFGHIJK", color: "cyan" },
+    { row: 1, letters: "ABCDEFGHIJK", color: "green" },
+    { row: 2, letters: "ABCDEFGHIJK", color: "yellow" },
+    { row: 3, letters: "ABCDEFGHIJK", color: "red" },
+    { row: 4, letters: "ABCDEFGHIJK", color: "purple" },
+    { row: 5, letters: "ABCDEFGHIJK", color: "orange" },
+    { row: 6, letters: "ABCDEFGHIJK", color: "pink" },
+    { row: 7, letters: "ABCDEFGHIJK", color: "teal" },
+    { row: 8, letters: "ABCDEFGHIJK", color: "lime" },
+    { row: 9, letters: "ABCDEFGHIJK", color: "indigo" },
+    { row: 10, letters: "ABCDEFGHIJK", color: "magenta" }
+];
+
+let sudokuGrid = [];
+
+// Generate random planet colors
+function generatePlanetColors() {
+    const planetTypes = [
+        // Blue ice planet
+        { light: '#5a9acc', mid: '#3a7aac', dark: '#2a5a8c', darker: '#1a4a6c', darkest: '#0a3a4c', highlight: 'rgba(150,220,255,0.3)', glow: 'rgba(100,180,255,0.5)' },
+        // Red mars-like
+        { light: '#cc6a4a', mid: '#ac4a2a', dark: '#8c3a1a', darker: '#6c2a0a', darkest: '#4c1a00', highlight: 'rgba(255,150,100,0.3)', glow: 'rgba(255,100,50,0.5)' },
+        // Purple nebula
+        { light: '#aa5acc', mid: '#8a3aac', dark: '#6a2a8c', darker: '#4a1a6c', darkest: '#3a0a4c', highlight: 'rgba(200,150,255,0.3)', glow: 'rgba(180,100,255,0.5)' },
+        // Green terrestrial
+        { light: '#5acc6a', mid: '#3aac4a', dark: '#2a8c3a', darker: '#1a6c2a', darkest: '#0a4c1a', highlight: 'rgba(150,255,180,0.3)', glow: 'rgba(100,255,150,0.5)' },
+        // Orange desert
+        { light: '#ccaa4a', mid: '#ac8a2a', dark: '#8c6a1a', darker: '#6c4a0a', darkest: '#4c3a00', highlight: 'rgba(255,220,150,0.3)', glow: 'rgba(255,180,100,0.5)' },
+        // Teal ocean
+        { light: '#4accaa', mid: '#2aac8a', dark: '#1a8c6a', darker: '#0a6c4a', darkest: '#004c3a', highlight: 'rgba(150,255,220,0.3)', glow: 'rgba(100,255,200,0.5)' },
+        // Pink exotic
+        { light: '#cc5a9a', mid: '#ac3a7a', dark: '#8c2a5a', darker: '#6c1a3a', darkest: '#4c0a2a', highlight: 'rgba(255,150,200,0.3)', glow: 'rgba(255,100,180,0.5)' },
+        // Yellow sulfur
+        { light: '#cccc4a', mid: '#acac2a', dark: '#8c8c1a', darker: '#6c6c0a', darkest: '#4c4c00', highlight: 'rgba(255,255,150,0.3)', glow: 'rgba(255,255,100,0.5)' }
+    ];
+    
+    const planet = planetTypes[Math.floor(Math.random() * planetTypes.length)];
+    const root = document.documentElement;
+    
+    root.style.setProperty('--planet-light', planet.light);
+    root.style.setProperty('--planet-mid', planet.mid);
+    root.style.setProperty('--planet-dark', planet.dark);
+    root.style.setProperty('--planet-darker', planet.darker);
+    root.style.setProperty('--planet-darkest', planet.darkest);
+    root.style.setProperty('--planet-highlight', planet.highlight);
+    root.style.setProperty('--planet-glow-inner', planet.glow);
+    root.style.setProperty('--planet-glow-mid', planet.glow.replace('0.5', '0.3'));
+    root.style.setProperty('--planet-glow-outer', planet.glow.replace('0.5', '0.15'));
+}
+
+// Generate a valid 11x11 sudoku grid with BOTH diagonals containing 0-10
+function generateSudokuGrid() {
+    sudokuGrid = [];
+    
+    // Create base pattern using (row + 3*col + offset) mod 11
+    // This ensures each row, column, AND both diagonals have 0-10 exactly once
+    // We use a random offset to get variation without breaking the diagonal property
+    let offset = Math.floor(Math.random() * 11);
+    
+    for (let row = 0; row < 11; row++) {
+        let rowArray = [];
+        for (let col = 0; col < 11; col++) {
+            rowArray.push((row + 3 * col + offset) % 11);
+        }
+        sudokuGrid.push(rowArray);
+    }
+}
+
+function resetValues() {
+    resetGame();
+}
+
+function getAnovaValue(row, letter) {
+    let col = letter.charCodeAt(0) - 65; // A=0, B=1, etc
+    if (sudokuGrid[row] && sudokuGrid[row][col] !== undefined) {
+        let baseValue = sudokuGrid[row][col];
+        let multipliedValue = baseValue * 10; // Multiply by 10 to get 0, 10, 20, ..., 90
+        return multipliedValue;
+    }
+    return 0;
+}
+
+function initializeCells() {
+    gameState.cells = {};
+    
+    rowConfig.forEach(rowConf => {
+        for (let letter of rowConf.letters) {
+            let cellId = `${rowConf.row}${letter}`;
+            let col = letter.charCodeAt(0) - 65;
+            let baseValue = sudokuGrid[rowConf.row] ? sudokuGrid[rowConf.row][col] : 0;
+            let anovaValue = baseValue * 10; // MULTIPLY BY 10 HERE
+            
+            gameState.cells[cellId] = {
+                id: cellId,
+                row: rowConf.row,
+                letter: letter,
+                color: rowConf.color,
+                anova: anovaValue,
+                mined: false,
+                minedBy: null, // Track which team mined this
+                revealed: false,
+                closed: false
+            };
+        }
+    });
+}
+
+let showingValues = false;
+let showingMined = false;
+
+function toggleValues() {
+    showingValues = !showingValues;
+    let btn = document.getElementById('toggleValuesBtn');
+    btn.textContent = showingValues ? 'HIDE VALUES' : 'SHOW VALUES';
+    btn.classList.toggle('active', showingValues);
+    renderPlanet();
+}
+
+function toggleMined() {
+    showingMined = !showingMined;
+    let btn = document.getElementById('toggleMinedBtn');
+    btn.textContent = showingMined ? 'HIDE MINED' : 'SHOW MINED';
+    btn.classList.toggle('active', showingMined);
+    renderPlanet();
+}
+
+function renderPlanet() {
+    let grid = document.getElementById('planetGrid');
+    grid.innerHTML = '';
+    grid.className = 'planet-grid' + (showingMined ? ' show-mined-mode' : '');
+    
+    // Clear and rebuild all arrows
+    let arrowsContainer = document.getElementById('planetArrows');
+    arrowsContainer.innerHTML = '';
+    
+    // Store cell positions for arrow placement
+    let cellPositions = {};
+    
+    rowConfig.forEach(rowConf => {
+        let rowDiv = document.createElement('div');
+        rowDiv.className = 'planet-row';
+        
+        for (let letter of rowConf.letters) {
+            let cellId = `${rowConf.row}${letter}`;
+            let cell = gameState.cells[cellId];
+            
+            if (cell) {
+                let cellDiv = document.createElement('div');
+                cellDiv.className = 'cell';
+                cellDiv.setAttribute('data-cell-id', cellId);
+                cellDiv.setAttribute('data-row', cell.row);
+                cellDiv.setAttribute('data-col', cell.letter.charCodeAt(0) - 65);
+                
+                if (cell.mined) cellDiv.classList.add('mined');
+                if (cell.closed) cellDiv.classList.add('closed');
+                if (gameState.selectedCell === cellId) {
+                    cellDiv.classList.add('selected');
+                }
+                if (showingValues) cellDiv.classList.add('show-value');
+                if (showingMined && cell.mined) cellDiv.classList.add('show-mined-value');
+                
+                if (cell.mined && cell.minedBy) {
+                    let team = gameState.teams.find(t => t.id === cell.minedBy);
+                    let teamColor = team ? team.color : '#888';
+                    cellDiv.style.borderColor = teamColor;
+                    cellDiv.style.boxShadow = `0 0 15px ${teamColor}`;
+                }
+                
+                // Determine what to show and what color
+                let displayContent = '';
+                if (cell.mined && cell.minedBy) {
+                    // Show value in team color with full brightness
+                    let team = gameState.teams.find(t => t.id === cell.minedBy);
+                    let teamColor = team ? team.color : '#888';
+                    displayContent = `<span class="anova-value" style="color:${teamColor};text-shadow:0 0 20px ${teamColor}, 0 0 10px ${teamColor}, 0 2px 4px rgba(0,0,0,0.8);font-size:1rem;font-weight:900">${cell.anova}</span>`;
+                } else if (cell.closed) {
+                    // Show value in white for closed cells with maximum contrast
+                    displayContent = `<span class="anova-value">${cell.anova}</span>`;
+                } else {
+                    // Normal display
+                    displayContent = `<span class="cell-id">${cellId}</span><span class="anova-value">${cell.anova}</span>`;
+                }
+                
+                cellDiv.innerHTML = displayContent;
+                cellDiv.onclick = () => selectCell(cellId);
+                
+                rowDiv.appendChild(cellDiv);
+            }
+        }
+        
+        grid.appendChild(rowDiv);
+    });
+    
+    // After DOM is ready, calculate positions and add arrows
+    setTimeout(() => {
+        addPersistentArrows();
+    }, 0);
+}
+
+function addPersistentArrows() {
+    let arrowsContainer = document.getElementById('planetArrows');
+    if (!arrowsContainer) return;
+    
+    let containerRect = arrowsContainer.getBoundingClientRect();
+    
+    // For each MINED cell, add arrows pointing to where unmined zeros are
+    Object.values(gameState.cells).forEach(cell => {
+        if (!cell.mined) return; // Only add arrows for mined cells
+        
+        let cellElement = document.querySelector(`[data-cell-id="${cell.id}"]`);
+        if (!cellElement) return;
+        
+        let directions = findZeroDirections(cell);
+        if (directions.length === 0) return; // No unmined zeros in this cell's lines
+        
+        let rect = cellElement.getBoundingClientRect();
+        let cellCenterX = rect.left + rect.width / 2 - containerRect.left;
+        let cellCenterY = rect.top + rect.height / 2 - containerRect.top;
+        
+        directions.forEach(dir => {
+            let arrow = document.createElement('div');
+            arrow.textContent = dir;
+            arrow.style.position = 'absolute';
+            arrow.style.fontSize = '1.5rem';
+            arrow.style.color = '#ff4444';
+            arrow.style.textShadow = '0 0 8px rgba(255,68,68,1)';
+            arrow.style.fontWeight = 'bold';
+            arrow.style.zIndex = '10';
+            arrow.style.pointerEvents = 'none';
+            arrow.style.transform = 'translate(-50%, -50%)';
+            arrow.style.lineHeight = '1';
+            arrow.style.fontFamily = 'Arial, sans-serif';
+            
+            let cellSize = 42;
+            let gap = 32;
+            let offset = cellSize / 2 + gap / 2; // Position in middle of gap
+            
+            // Position arrow in the appropriate gap based on direction
+            if (dir === '→') {
+                arrow.style.left = (cellCenterX + offset) + 'px';
+                arrow.style.top = cellCenterY + 'px';
+            } else if (dir === '←') {
+                arrow.style.left = (cellCenterX - offset) + 'px';
+                arrow.style.top = cellCenterY + 'px';
+            } else if (dir === '↓') {
+                arrow.style.left = cellCenterX + 'px';
+                arrow.style.top = (cellCenterY + offset) + 'px';
+            } else if (dir === '↑') {
+                arrow.style.left = cellCenterX + 'px';
+                arrow.style.top = (cellCenterY - offset) + 'px';
+            } else if (dir === '↘') {
+                arrow.style.left = (cellCenterX + offset) + 'px';
+                arrow.style.top = (cellCenterY + offset) + 'px';
+            } else if (dir === '↖') {
+                arrow.style.left = (cellCenterX - offset) + 'px';
+                arrow.style.top = (cellCenterY - offset) + 'px';
+            } else if (dir === '↙') {
+                arrow.style.left = (cellCenterX - offset) + 'px';
+                arrow.style.top = (cellCenterY + offset) + 'px';
+            } else if (dir === '↗') {
+                arrow.style.left = (cellCenterX + offset) + 'px';
+                arrow.style.top = (cellCenterY - offset) + 'px';
+            }
+            
+            arrowsContainer.appendChild(arrow);
+        });
+    });
+}
+
+function createTeam() {
+    let input = document.getElementById('teamNameInput');
+    let name = input.value.trim();
+    
+    if (!name) return;
+    
+    if (gameState.teams.find(t => t.name === name)) {
+        alert('Team name already exists!');
+        return;
+    }
+    
+    if (gameState.teams.length >= teamColors.length) {
+        alert(`Maximum of ${teamColors.length} teams allowed!`);
+        return;
+    }
+    
+    // Assign colors in order
+    let colorIndex = gameState.teams.length;
+    let teamColor = teamColors[colorIndex];
+    
+    console.log(`Creating team #${colorIndex}: ${name} with color ${teamColor}`);
+    
+    let team = {
+        id: Date.now(),
+        name: name,
+        color: teamColor,
+        extracted: 0,
+        destroyed: 0,
+        penalties: 0,
+        freeDay: 1,
+        status: 'ready',
+        location: null,
+        speedChoices: { fast: 0, medium: 0, slow: 0 },
+        scoreHistory: [],
+        totalPotential: 0
+    };
+    
+    gameState.teams.push(team);
+    input.value = '';
+    
+    if (!gameState.selectedTeam) {
+        gameState.selectedTeam = team.id;
+    }
+    
+    addLog(`Team "${name}" joined the game`, 'move');
+    renderTeams();
+    renderLeaderboard();
+    updateActionPanel();
+}
+
+function renderTeams() {
+    let list = document.getElementById('teamList');
+    list.innerHTML = '';
+    
+    let sortedTeams = [...gameState.teams].sort((a, b) => a.freeDay - b.freeDay);
+    
+    sortedTeams.forEach(team => {
+        let div = document.createElement('div');
+        div.className = 'team-card';
+        
+        if (team.id === gameState.selectedTeam) div.classList.add('active');
+        if (team.status === 'mining') div.classList.add('mining');
+        
+        let status = team.status;
+        let statusText = team.status === 'mining' ? `Mining Until Day ${team.freeDay}` : 'Ready';
+        let penaltyText = team.penalties > 0 ? `<span style="color:#ff8800">-${team.penalties} penalty</span>` : '';
+        let colorDot = `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${team.color};margin-right:4px;box-shadow:0 0 8px ${team.color}"></span>`;
+        
+        div.innerHTML = `
+            <div class="team-name">${colorDot}${team.name} <span class="team-status ${status}">${statusText}</span></div>
+            <div class="team-stats">
+                <span class="stat-extracted">▲ ${team.extracted}</span>
+                <span class="stat-destroyed">✕ ${team.destroyed}</span>
+            </div>
+            ${penaltyText ? `<div class="team-stats">${penaltyText}</div>` : ''}
+        `;
+        
+        div.onclick = () => {
+            if (team.status === 'ready') {
+                gameState.selectedTeam = team.id;
+                gameState.selectedCell = null;
+                renderTeams();
+                renderPlanet();
+                updateActionPanel();
+            }
+        };
+        
+        list.appendChild(div);
+    });
+}
+
+function selectCell(cellId) {
+    let cell = gameState.cells[cellId];
+    if (!cell || cell.mined || cell.closed || !gameState.selectedTeam) return;
+    
+    let team = gameState.teams.find(t => t.id === gameState.selectedTeam);
+    if (!team || team.status !== 'ready') return;
+    
+    gameState.selectedCell = cellId;
+    cell.revealed = true;
+    renderPlanet();
+    showMiningPopup(cell, team);
+}
+
+function showMiningPopup(cell, team) {
+    document.getElementById('miningOverlay').style.display = 'block';
+    let popup = document.getElementById('miningPopup');
+    popup.style.display = 'block';
+    
+    // Set border color to team color
+    popup.style.borderColor = team.color;
+    popup.style.boxShadow = `0 0 40px ${team.color}33, inset 0 0 40px ${team.color}11`;
+    
+    document.getElementById('popupCellId').textContent = cell.id;
+    
+    // Set ANOVA amount color to team color
+    let anovaDisplay = document.getElementById('popupAnovaAmount');
+    anovaDisplay.textContent = `${cell.anova} ANOVA`;
+    anovaDisplay.style.color = team.color;
+    anovaDisplay.style.textShadow = `0 0 30px ${team.color}99`;
+    
+    document.getElementById('popupTeamName').textContent = team.name;
+    document.getElementById('popupTeamName').style.color = team.color;
+    
+    let totalValue = cell.anova;
+    
+    // FAST: DESTROY, DESTROY, DESTROY, MINE, MINE, MINE (3 destroy first, then 3 mine)
+    // Each day destroys 3, mines 3 = 6 total processed
+    let fastDays = Math.ceil(totalValue / 6);
+    let fastDestroyed = Math.min(fastDays * 3, totalValue);
+    let fastExtracted = Math.min(totalValue - fastDestroyed, fastDays * 3);
+    
+    // MEDIUM: DESTROY, MINE, MINE (1 destroy first, then 2 mine per day = 3 total per day)
+    let mediumDays = Math.ceil(totalValue / 3);
+    let mediumDestroyed = Math.min(mediumDays * 1, totalValue);
+    let mediumExtracted = totalValue - mediumDestroyed;
+    
+    // CAREFUL: mine 1, destroy 0 per day
+    let carefulDays = totalValue;
+    let carefulExtracted = totalValue;
+    
+    document.getElementById('popupFastStats').innerHTML = 
+        `<span style="color:#ffffff;font-size:1.2rem;font-weight:700">${fastDays} days</span><br><span style="color:#ff4444;font-size:1.1rem;font-weight:700">-${fastDestroyed}</span> <span style="color:#888">/</span> <span style="color:#00ff88;font-size:1.1rem;font-weight:700">+${fastExtracted}</span>`;
+    document.getElementById('popupMediumStats').innerHTML = 
+        `<span style="color:#ffffff;font-size:1.2rem;font-weight:700">${mediumDays} days</span><br><span style="color:#ff4444;font-size:1.1rem;font-weight:700">-${mediumDestroyed}</span> <span style="color:#888">/</span> <span style="color:#00ff88;font-size:1.1rem;font-weight:700">+${mediumExtracted}</span>`;
+    document.getElementById('popupSlowStats').innerHTML = 
+        `<span style="color:#ffffff;font-size:1.2rem;font-weight:700">${carefulDays} days</span><br><span style="color:#ff4444;font-size:1.1rem;font-weight:700">-0</span> <span style="color:#888">/</span> <span style="color:#00ff88;font-size:1.1rem;font-weight:700">+${carefulExtracted}</span>`;
+}
+
+function findZeroDirections(cell) {
+    let directions = [];
+    
+    // Find all cells with value 0
+    let zeroCells = Object.values(gameState.cells).filter(c => c.anova === 0 && !c.mined);
+    
+    for (let zeroCell of zeroCells) {
+        // Check if in same row
+        if (zeroCell.row === cell.row) {
+            let zeroCol = zeroCell.letter.charCodeAt(0) - 65;
+            let cellCol = cell.letter.charCodeAt(0) - 65;
+            if (zeroCol < cellCol) {
+                directions.push('←');
+            } else if (zeroCol > cellCol) {
+                directions.push('→');
+            }
+        }
+        
+        // Check if in same column
+        if (zeroCell.letter === cell.letter) {
+            if (zeroCell.row < cell.row) {
+                directions.push('↑');
+            } else if (zeroCell.row > cell.row) {
+                directions.push('↓');
+            }
+        }
+        
+        // Check if current cell is on MAIN diagonal (row == col)
+        let cellCol = cell.letter.charCodeAt(0) - 65;
+        let isOnMainDiagonal = (cell.row === cellCol);
+        
+        if (isOnMainDiagonal) {
+            // Check if zero is also on main diagonal
+            let zeroCol = zeroCell.letter.charCodeAt(0) - 65;
+            if (zeroCell.row === zeroCol) {
+                if (zeroCell.row < cell.row) {
+                    directions.push('↖');
+                } else if (zeroCell.row > cell.row) {
+                    directions.push('↘');
+                }
+            }
+        }
+        
+        // Check if current cell is on ANTI-diagonal (row + col == 10)
+        let isOnAntiDiagonal = (cell.row + cellCol === 10);
+        
+        if (isOnAntiDiagonal) {
+            // Check if zero is also on anti-diagonal
+            let zeroCol = zeroCell.letter.charCodeAt(0) - 65;
+            if (zeroCell.row + zeroCol === 10) {
+                if (zeroCell.row < cell.row) {
+                    directions.push('↗');
+                } else if (zeroCell.row > cell.row) {
+                    directions.push('↙');
+                }
+            }
+        }
+    }
+    
+    // Remove duplicates and return
+    return [...new Set(directions)];
+}
+
+function closeMiningPopup() {
+    document.getElementById('miningOverlay').style.display = 'none';
+    document.getElementById('miningPopup').style.display = 'none';
+    gameState.selectedCell = null;
+    renderPlanet();
+    updateActionPanel();
+}
+
+function selectMiningSpeed(speed) {
+    document.getElementById('miningOverlay').style.display = 'none';
+    document.getElementById('miningPopup').style.display = 'none';
+    showMiningAnimation(speed);
+}
+
+function showMiningAnimation(speed) {
+    let team = gameState.teams.find(t => t.id === gameState.selectedTeam);
+    let cell = gameState.cells[gameState.selectedCell];
+    
+    if (!team || !cell) return;
+    
+    let destroyed = 0;
+    let extracted = 0;
+    let days = 0;
+    let totalValue = cell.anova;
+    
+    if (speed === 'fast') {
+        // DESTROY, DESTROY, DESTROY, then MINE, MINE, MINE - each day processes 6 total (3 destroy, 3 mine)
+        days = Math.ceil(totalValue / 6);
+        destroyed = Math.min(days * 3, totalValue);
+        extracted = Math.min(totalValue - destroyed, days * 3);
+    } else if (speed === 'medium') {
+        // DESTROY, MINE, MINE per day (1 destroy first, then 2 mine = 3 total per day)
+        days = Math.ceil(totalValue / 3);
+        destroyed = Math.min(days * 1, totalValue);
+        extracted = totalValue - destroyed;
+    } else { // careful
+        days = totalValue;
+        extracted = totalValue;
+        destroyed = 0;
+    }
+    
+    team.speedChoices[speed]++;
+    
+    let anim = document.getElementById('miningAnimation');
+    anim.style.display = 'flex';
+    
+    let sparks = document.getElementById('miningSparks');
+    sparks.innerHTML = '';
+    
+    let sparkInterval = setInterval(() => {
+        for (let i = 0; i < 5; i++) {
+            let spark = document.createElement('div');
+            spark.className = 'spark';
+            let angle = Math.random() * Math.PI * 2;
+            let distance = 50 + Math.random() * 100;
+            spark.style.setProperty('--tx', `${Math.cos(angle) * distance}px`);
+            spark.style.setProperty('--ty', `${Math.sin(angle) * distance}px`);
+            spark.style.background = ['#ffff00', '#ff8800', '#fff', '#00ffff'][Math.floor(Math.random() * 4)];
+            sparks.appendChild(spark);
+            setTimeout(() => spark.remove(), 600);
+        }
+    }, 100);
+    
+    let speedText = speed === 'slow' ? 'CAREFUL' : speed.toUpperCase();
+    
+    document.getElementById('miningResult').innerHTML = `
+        <div class="result-extracted">+${extracted} EXTRACTED</div>
+        <div class="result-destroyed">-${destroyed} DESTROYED</div>
+        <div style="margin-top:16px;color:#888;font-size:0.9rem">${days} days • ${speedText} speed</div>
+    `;
+    
+    setTimeout(() => {
+        clearInterval(sparkInterval);
+        
+        team.extracted += extracted;
+        team.destroyed += destroyed;
+        team.totalPotential += totalValue;
+        team.status = 'mining';
+        team.location = cell.id;
+        team.freeDay = gameState.currentDay + days;
+        cell.mined = true;
+        cell.minedBy = team.id; // Store which team mined this
+        
+        team.scoreHistory.push({
+            day: gameState.currentDay,
+            score: team.extracted - team.penalties
+        });
+        
+        addLog(`${team.name} mining ${cell.id} (${speedText}): +${extracted} extracted, -${destroyed} destroyed`, extracted > 0 ? 'extract' : 'destroy');
+        
+        if (destroyed > 0) {
+            checkTranchePenalties(team, destroyed);
+        } else {
+            updateTotalDestroyed();
+            renderTrancheVisual();
+            updateHeaderTranche();
+        }
+        
+        checkRowClosures(cell);
+        gameState.selectedCell = null;
+        
+        setTimeout(() => {
+            anim.style.display = 'none';
+            advanceToNextTeam();
+        }, 500);
+    }, 2000);
+}
+
+function updateActionPanel() {
+    let panel = document.getElementById('actionPanel');
+    let team = gameState.teams.find(t => t.id === gameState.selectedTeam);
+    
+    if (!team) {
+        panel.innerHTML = '<div class="no-team-selected">Create a team to begin mining operations</div>';
+        return;
+    }
+    
+    if (team.status === 'mining') {
+        panel.innerHTML = `
+            <div class="action-title">Team "${team.name}" is mining</div>
+            <div class="selected-cell-info">Location: ${team.location}</div>
+            <div style="color:#888;font-size:0.85rem">Free on Day ${team.freeDay}</div>
+        `;
+        return;
+    }
+    
+    if (!gameState.selectedCell) {
+        panel.innerHTML = `
+            <div class="action-title">Team "${team.name}" - Ready</div>
+            <div class="no-team-selected">Select a cell on the planet to explore</div>
+            <button class="btn btn-pass" style="margin-top:10px" onclick="passTurn()">PASS (scout next day)</button>
+        `;
+        return;
+    }
+    
+    let cell = gameState.cells[gameState.selectedCell];
+    if (!cell) {
+        gameState.selectedCell = null;
+        panel.innerHTML = `
+            <div class="action-title">Team "${team.name}" - Ready</div>
+            <div class="no-team-selected">Select a cell on the planet to explore</div>
+        `;
+        return;
+    }
+    
+    panel.innerHTML = `
+        <div class="action-title">Team "${team.name}"</div>
+        <div class="selected-cell-info">Selected: ${cell.id}</div>
+        <div class="anova-amount">${cell.anova} ANOVA</div>
+        <button class="btn btn-pass" style="margin-top:10px" onclick="passTurn()">PASS (scout another cell)</button>
+    `;
+}
+
+function passTurn() {
+    let team = gameState.teams.find(t => t.id === gameState.selectedTeam);
+    if (!team) return;
+    
+    team.freeDay = gameState.currentDay + 1;
+    team.scoreHistory.push({
+        day: gameState.currentDay,
+        score: team.extracted - team.penalties
+    });
+    
+    addLog(`${team.name} passed (scouting)`, 'move');
+    gameState.selectedCell = null;
+    advanceToNextTeam();
+}
+
+function checkRowClosures(minedCell) {
+    // Check if the mined cell has value 0
+    if (minedCell.anova === 0) {
+        let totalLost = 0;
+        
+        // Close entire row
+        let rowCells = Object.values(gameState.cells).filter(c => c.row === minedCell.row);
+        rowCells.forEach(c => {
+            if (!c.mined && !c.closed) {
+                c.closed = true;
+                totalLost += c.anova;
+            }
+        });
+        
+        // Close entire column
+        let colCells = Object.values(gameState.cells).filter(c => c.letter === minedCell.letter);
+        colCells.forEach(c => {
+            if (!c.mined && !c.closed) {
+                c.closed = true;
+                totalLost += c.anova;
+            }
+        });
+        
+        gameState.totalLost += totalLost;
+        document.getElementById('lostValue').textContent = gameState.totalLost.toLocaleString();
+        
+        addLog(`💥 ZERO MINED at ${minedCell.id}! Row ${minedCell.row} and Column ${minedCell.letter} SHUT DOWN (${totalLost} ANOVA lost)`, 'destroy');
+    }
+}
+
+function showPenaltyNotification(teamName, penalty, rangeStart, rangeEnd) {
+    let notification = document.getElementById('penaltyNotification');
+    document.getElementById('penaltyTeamName').textContent = teamName;
+    document.getElementById('penaltyAmount').textContent = `-${penalty} ANOVA`;
+    document.getElementById('penaltyReason').textContent = `Highest contributor to exhausted tranche ${rangeStart}-${rangeEnd}`;
+    
+    notification.style.display = 'block';
+    notification.classList.remove('hiding');
+    
+    setTimeout(() => {
+        notification.classList.add('hiding');
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 500);
+    }, 4000);
+}
+
+function advanceToNextTeam() {
+    let teams = gameState.teams;
+    if (teams.length === 0) return;
+    
+    // Free up teams that are done mining
+    teams.forEach(t => {
+        if (t.status === 'mining' && t.freeDay <= gameState.currentDay) {
+            t.status = 'ready';
+            t.location = null;
+        }
+    });
+    
+    // Find next free day
+    let nextFreeDay = Math.min(...teams.map(t => t.freeDay));
+    gameState.currentDay = Math.max(gameState.currentDay, nextFreeDay);
+    
+    // Free up teams again
+    teams.forEach(t => {
+        if (t.status === 'mining' && t.freeDay <= gameState.currentDay) {
+            t.status = 'ready';
+            t.location = null;
+        }
+    });
+    
+    // Select next ready team
+    let nextTeam = teams.find(t => t.status === 'ready');
+    if (nextTeam) {
+        gameState.selectedTeam = nextTeam.id;
+    }
+    
+    document.getElementById('dayValue').textContent = gameState.currentDay;
+    
+    renderTeams();
+    renderPlanet();
+    renderLeaderboard();
+    renderTrancheVisual();
+    updateTotalDestroyed();
+    updateHeaderTranche();
+    updateActionPanel();
+    
+    // Check day limit
+    if (gameConfig.dayLimit > 0 && gameState.currentDay >= gameConfig.dayLimit) {
+        endGame();
+        addLog(`⏰ Day ${gameConfig.dayLimit} limit reached!`, 'destroy');
+        return;
+    }
+    
+    // Check if game is over
+    let availableCells = Object.values(gameState.cells).filter(c => !c.mined && !c.closed);
+    if (availableCells.length === 0) {
+        endGame();
+    }
+}
+
+function checkTranchePenalties(team, destroyed) {
+    let totalDestroyed = gameState.teams.reduce((sum, t) => sum + t.destroyed, 0);
+    let previousTotal = totalDestroyed - destroyed;
+    let remaining = destroyed;
+    let currentTotal = previousTotal;
+    
+    while (remaining > 0) {
+        let trancheIndex = Math.floor(currentTotal / 100);
+        let trancheEnd = (trancheIndex + 1) * 100;
+        let spaceInTranche = trancheEnd - currentTotal;
+        let amountToAdd = Math.min(remaining, spaceInTranche);
+        
+        if (!gameState.trancheContributions[trancheIndex]) {
+            gameState.trancheContributions[trancheIndex] = {};
+        }
+        
+        if (!gameState.trancheContributions[trancheIndex][team.id]) {
+            gameState.trancheContributions[trancheIndex][team.id] = 0;
+        }
+        
+        gameState.trancheContributions[trancheIndex][team.id] += amountToAdd;
+        
+        // Check if tranche is complete
+        if (currentTotal + amountToAdd >= trancheEnd) {
+            // Find highest contributor
+            let maxTeam = null;
+            let maxContribution = 0;
+            
+            Object.entries(gameState.trancheContributions[trancheIndex]).forEach(([teamId, contribution]) => {
+                if (contribution > maxContribution) {
+                    maxContribution = contribution;
+                    maxTeam = gameState.teams.find(t => t.id === parseInt(teamId));
+                }
+            });
+            
+            if (maxTeam) {
+                let penalty = gameConfig.penaltyType === 'add' 
+                    ? gameConfig.basePenalty + (trancheIndex * gameConfig.penaltyAdd)
+                    : Math.round(gameConfig.basePenalty * Math.pow(gameConfig.penaltyMultiply, trancheIndex));
+                
+                maxTeam.penalties += penalty;
+                maxTeam.scoreHistory.push({
+                    day: gameState.currentDay,
+                    score: maxTeam.extracted - maxTeam.penalties
+                });
+                
+                addLog(`⚠️ PENALTY: ${maxTeam.name} penalized ${penalty} ANOVA (highest contributor to tranche ${trancheIndex * 100 + 1}-${trancheEnd})`, 'destroy');
+                showPenaltyNotification(maxTeam.name, penalty, trancheIndex * 100 + 1, trancheEnd);
+            }
+        }
+        
+        currentTotal += amountToAdd;
+        remaining -= amountToAdd;
+    }
+    
+    updateTotalDestroyed();
+    renderTrancheVisual();
+    updateHeaderTranche();
+}
+
+function renderTrancheVisual() {
+    let container = document.getElementById('trancheVisual');
+    if (!container) return;
+    
+    let totalDestroyed = gameState.teams.reduce((sum, t) => sum + t.destroyed, 0);
+    let completedTranches = Math.floor(totalDestroyed / 100);
+    
+    let html = '';
+    
+    if (completedTranches > 0) {
+        for (let i = completedTranches - 1; i >= 0; i--) {
+            let rangeStart = i * 100 + 1;
+            let rangeEnd = (i + 1) * 100;
+            let penalty = gameConfig.penaltyType === 'add'
+                ? gameConfig.basePenalty + (i * gameConfig.penaltyAdd)
+                : Math.round(gameConfig.basePenalty * Math.pow(gameConfig.penaltyMultiply, i));
+            
+            html += `<div class="tranche-block complete">`;
+            html += `<div class="tranche-header">${rangeStart}-${rangeEnd} <span class="tranche-penalty">(-${penalty})</span> ✓</div>`;
+            html += '<div class="tranche-bar-container">';
+            
+            let contributions = gameState.trancheContributions[i] || {};
+            gameState.teams.forEach((team) => {
+                let contribution = contributions[team.id] || 0;
+                if (contribution > 0) {
+                    html += `<div class="tranche-segment" style="width:${contribution}%;background:${team.color}" title="${team.name}:${contribution}"></div>`;
+                }
+            });
+            
+            html += '</div>';
+            
+            if (Object.keys(contributions).length > 0) {
+                html += '<div class="tranche-legend">';
+                gameState.teams.forEach((team) => {
+                    let contribution = contributions[team.id] || 0;
+                    if (contribution > 0) {
+                        html += `<span class="legend-item"><span class="legend-color" style="background:${team.color}"></span>${team.name}: ${contribution}</span>`;
+                    }
+                });
+                html += '</div>';
+            }
+            
+            html += '</div>';
+        }
+    }
+    
+    if (html === '') {
+        html = '<div style="color:#666;font-size:0.8rem;text-align:center;padding:10px">No exhausted tranches yet</div>';
+    }
+    
+    container.innerHTML = html;
+}
+
+function addLog(message, type) {
+    gameState.log.unshift({
+        message: message,
+        type: type,
+        day: gameState.currentDay
+    });
+    renderLog();
+}
+
+function renderLog() {
+    let log = document.getElementById('gameLog');
+    log.innerHTML = gameState.log.slice(0, 50).map(entry => {
+        return `<div class="log-entry ${entry.type}">Day ${entry.day}: ${entry.message}</div>`;
+    }).join('');
+}
+
+function renderLeaderboard() {
+    let board = document.getElementById('leaderboard');
+    let sorted = [...gameState.teams].sort((a, b) => {
+        return (b.extracted - b.penalties) - (a.extracted - a.penalties);
+    });
+    
+    board.innerHTML = sorted.map((team, idx) => {
+        let score = team.extracted - team.penalties;
+        let penaltyText = team.penalties > 0 ? ` <span style="color:#ff8800;font-size:0.6rem">(-${team.penalties})</span>` : '';
+        return `
+            <div class="leaderboard-entry ${idx === 0 ? 'leader' : ''}">
+                <span>${idx + 1}. ${team.name}</span>
+                <span style="color:${score >= 0 ? '#00ff88' : '#ff4444'}">▲ ${score}${penaltyText}</span>
+            </div>
+        `;
+    }).join('');
+    
+    updateTotalDestroyed();
+}
+
+function updateTotalDestroyed() {
+    let totalDestroyed = gameState.teams.reduce((sum, t) => sum + t.destroyed, 0);
+    let totalMined = gameState.teams.reduce((sum, t) => sum + t.extracted, 0);
+    
+    // Calculate total ANOVA available (sum of all cells)
+    let totalAvailable = Object.values(gameState.cells).reduce((sum, c) => sum + c.anova, 0);
+    
+    // Calculate total ANOVA in closed cells
+    let totalClosed = Object.values(gameState.cells).filter(c => c.closed && !c.mined).reduce((sum, c) => sum + c.anova, 0);
+    
+    // Calculate remaining (total - mined - destroyed - closed)
+    let totalRemaining = totalAvailable - totalMined - totalDestroyed - totalClosed;
+    
+    document.getElementById('destroyedValue').textContent = totalDestroyed.toLocaleString();
+    document.getElementById('minedValue').textContent = totalMined.toLocaleString();
+    document.getElementById('remainingValue').textContent = totalRemaining.toLocaleString();
+    document.getElementById('lostValue').textContent = gameState.totalLost.toLocaleString();
+}
+
+function endGame() {
+    if (gameState.gameOver) return;
+    
+    gameState.gameOver = true;
+    
+    let sorted = [...gameState.teams].sort((a, b) => {
+        return (b.extracted - b.penalties) - (a.extracted - a.penalties);
+    });
+    
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('winnerBanner').style.display = 'block';
+    
+    if (sorted.length === 0) {
+        document.getElementById('winnerName').textContent = 'No teams!';
+        document.getElementById('finalScores').innerHTML = '';
+        return;
+    }
+    
+    let winner = sorted[0];
+    let winnerScore = winner.extracted - winner.penalties;
+    document.getElementById('winnerName').textContent = `🏆 ${winner.name} wins with ${winnerScore} ANOVA!`;
+    
+    // Calculate superlatives
+    let mostMined = [...gameState.teams].sort((a, b) => b.extracted - a.extracted)[0];
+    let mostDestroyed = [...gameState.teams].sort((a, b) => b.destroyed - a.destroyed)[0];
+    let highestPotential = [...gameState.teams].sort((a, b) => b.totalPotential - a.totalPotential)[0];
+    
+    // Speed choices chart - use team colors
+    let speedHtml = '';
+    
+    gameState.teams.forEach((team) => {
+        let totalChoices = team.speedChoices.fast + team.speedChoices.medium + team.speedChoices.slow;
+        let fastPct = totalChoices > 0 ? (team.speedChoices.fast / totalChoices) * 100 : 0;
+        let medPct = totalChoices > 0 ? (team.speedChoices.medium / totalChoices) * 100 : 0;
+        let carefulPct = totalChoices > 0 ? (team.speedChoices.slow / totalChoices) * 100 : 0;
+        
+        speedHtml += `
+            <div class="team-speed-chart">
+                <div class="team-speed-chart-title" style="color:${team.color}">${team.name}</div>
+                <div class="speed-bars">
+                    <div class="speed-bar-row">
+                        <div class="speed-label fast">FAST</div>
+                        <div class="speed-bar fast" style="width:${Math.max(fastPct, 20)}px">${team.speedChoices.fast}</div>
+                    </div>
+                    <div class="speed-bar-row">
+                        <div class="speed-label medium">MEDIUM</div>
+                        <div class="speed-bar medium" style="width:${Math.max(medPct, 20)}px">${team.speedChoices.medium}</div>
+                    </div>
+                    <div class="speed-bar-row">
+                        <div class="speed-label slow">CAREFUL</div>
+                        <div class="speed-bar slow" style="width:${Math.max(carefulPct, 20)}px">${team.speedChoices.slow}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    // ANOVA per Day chart
+    let maxRate = Math.max(...gameState.teams.map(t => {
+        let days = t.freeDay - 1;
+        return days > 0 ? (t.extracted - t.penalties) / days : 0;
+    }), 1);
+    
+    let rateHtml = '';
+    gameState.teams.forEach((team) => {
+        let days = team.freeDay - 1;
+        let rate = days > 0 ? (team.extracted - team.penalties) / days : 0;
+        let barWidth = (rate / maxRate) * 300;
+        
+        rateHtml += `
+            <div class="speed-bar-row" style="margin-bottom:12px">
+                <div class="speed-label" style="width:120px;color:${team.color}">${team.name}</div>
+                <div class="speed-bar" style="width:${Math.max(barWidth, 30)}px;background:${team.color}">${rate.toFixed(1)}</div>
+            </div>
+        `;
+    });
+    
+    document.getElementById('finalScores').innerHTML = `
+        <div style="margin:20px 0;text-align:left">
+            ${gameState.teams.map(team => {
+                let score = team.extracted - team.penalties;
+                let penaltyText = team.penalties > 0 ? `, <span style="color:#ff8800">-${team.penalties} penalty</span>` : '';
+                return `<div style="margin:5px 0;font-family:'IBM Plex Mono',monospace;font-size:0.9rem"><span style="color:${team.color}">●</span> ${team.name}: ${team.extracted} mined, ${team.destroyed} destroyed${penaltyText} = <strong>${score} net</strong></div>`;
+            }).join('')}
+        </div>
+        
+        <div class="stats-section">
+            <div class="stats-title">Superlatives</div>
+            <div style="text-align:left;margin:15px 0;font-family:'IBM Plex Mono',monospace;font-size:1rem;line-height:1.8">
+                <div><strong style="color:#00ff88">Most ANOVA Mined:</strong> <span style="color:${mostMined.color}">${mostMined.name}</span> (${mostMined.extracted})</div>
+                <div><strong style="color:#ff4444">Most ANOVA Destroyed:</strong> <span style="color:${mostDestroyed.color}">${mostDestroyed.name}</span> (${mostDestroyed.destroyed})</div>
+                <div><strong style="color:#ffaa00">Highest ANOVA Potential:</strong> <span style="color:${highestPotential.color}">${highestPotential.name}</span> (${highestPotential.totalPotential})</div>
+            </div>
+        </div>
+        
+        <div class="stats-section">
+            <div class="stats-title">ANOVA per Day</div>
+            <div style="padding:20px;background:#12121a;border-radius:8px">
+                ${rateHtml}
+            </div>
+        </div>
+        
+        <div class="stats-section">
+            <div class="stats-title">Mining Speed Choices</div>
+            <div class="speed-chart-container">${speedHtml}</div>
+        </div>
+    `;
+}
+
+function resetGame() {
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('winnerBanner').style.display = 'none';
+    
+    gameState = {
+        teams: [],
+        cells: {},
+        selectedTeam: null,
+        selectedCell: null,
+        currentDay: 1,
+        log: [],
+        gameOver: false,
+        trancheContributions: {},
+        totalLost: 0
+    };
+    
+    generatePlanetColors();
+    generateSudokuGrid();
+    initializeCells();
+    
+    document.getElementById('dayValue').textContent = '1';
+    document.getElementById('destroyedValue').textContent = '0';
+    document.getElementById('minedValue').textContent = '0';
+    
+    // Calculate initial remaining
+    let totalAvailable = Object.values(gameState.cells).reduce((sum, c) => sum + c.anova, 0);
+    document.getElementById('remainingValue').textContent = totalAvailable.toLocaleString();
+    
+    showingValues = false;
+    showingMined = false;
+    document.getElementById('toggleValuesBtn').textContent = 'SHOW VALUES';
+    document.getElementById('toggleValuesBtn').classList.remove('active');
+    document.getElementById('toggleMinedBtn').textContent = 'SHOW MINED';
+    document.getElementById('toggleMinedBtn').classList.remove('active');
+    
+    renderPlanet();
+    renderTeams();
+    renderLeaderboard();
+    addLog("🔄 New game started!", "move");
+    renderTrancheVisual();
+    updateHeaderTranche();
+    updateActionPanel();
+}
+
+function updateHeaderTranche() {
+    let totalDestroyed = gameState.teams.reduce((sum, t) => sum + t.destroyed, 0);
+    let trancheIndex = Math.floor(totalDestroyed / 100);
+    let rangeStart = trancheIndex * 100 + 1;
+    let rangeEnd = (trancheIndex + 1) * 100;
+    
+    let penalty = gameConfig.penaltyType === 'add'
+        ? gameConfig.basePenalty + (trancheIndex * gameConfig.penaltyAdd)
+        : Math.round(gameConfig.basePenalty * Math.pow(gameConfig.penaltyMultiply, trancheIndex));
+    
+    document.getElementById('currentTrancheRange').textContent = `${rangeStart.toLocaleString()}-${rangeEnd.toLocaleString()}`;
+    document.getElementById('currentTranchePenalty').textContent = `(-${penalty})`;
+    
+    let contributions = gameState.trancheContributions[trancheIndex] || {};
+    
+    // Sort teams by contribution (ascending order - smallest to largest)
+    let sortedContributions = gameState.teams
+        .map(team => ({ team, contribution: contributions[team.id] || 0 }))
+        .filter(item => item.contribution > 0)
+        .sort((a, b) => a.contribution - b.contribution);
+    
+    let barHtml = '';
+    let legendHtml = '';
+    
+    sortedContributions.forEach(item => {
+        barHtml += `<div class="current-tranche-segment" style="width:${item.contribution}%;background:${item.team.color}">${item.contribution}</div>`;
+        legendHtml += `<span class="current-legend-item"><span class="current-legend-color" style="background:${item.team.color}"></span>${item.team.name}: ${item.contribution}</span>`;
+    });
+    
+    // Calculate remaining space in tranche
+    let trancheUsed = Object.values(contributions).reduce((sum, val) => sum + val, 0);
+    let trancheRemaining = 100 - trancheUsed;
+    
+    if (trancheRemaining > 0) {
+        barHtml += `<div class="current-tranche-segment" style="width:${trancheRemaining}%;background:rgba(255,255,255,0.15);color:#fff">${trancheRemaining}</div>`;
+    }
+    
+    document.getElementById('currentTrancheBar').innerHTML = barHtml;
+    document.getElementById('currentTrancheLegend').innerHTML = legendHtml;
+}
+
+function saveGame() {
+    let saveData = {
+        version: 2,
+        timestamp: new Date().toISOString(),
+        gameState: gameState,
+        showingValues: showingValues,
+        showingMined: showingMined
+    };
+    
+    let blob = new Blob([JSON.stringify(saveData, null, 2)], { type: 'application/json' });
+    let url = URL.createObjectURL(blob);
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = `anova-save-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    addLog('Game saved', 'move');
+}
+
+function loadGame(event) {
+    let file = event.target.files[0];
+    if (!file) return;
+    
+    let reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            let saveData = JSON.parse(e.target.result);
+            
+            if (!saveData.gameState) {
+                alert('Invalid save file');
+                return;
+            }
+            
+            gameState = saveData.gameState;
+            showingValues = saveData.showingValues || false;
+            showingMined = saveData.showingMined || false;
+            
+            document.getElementById('toggleValuesBtn').textContent = showingValues ? 'HIDE VALUES' : 'SHOW VALUES';
+            document.getElementById('toggleValuesBtn').classList.toggle('active', showingValues);
+            document.getElementById('toggleMinedBtn').textContent = showingMined ? 'HIDE MINED' : 'SHOW MINED';
+            document.getElementById('toggleMinedBtn').classList.toggle('active', showingMined);
+            
+            document.getElementById('dayValue').textContent = gameState.currentDay;
+            
+            renderPlanet();
+            renderTeams();
+            renderLeaderboard();
+            renderLog();
+            renderTrancheVisual();
+            updateTotalDestroyed();
+            updateHeaderTranche();
+            updateActionPanel();
+            
+            addLog('Game loaded from save', 'move');
+        } catch (err) {
+            alert('Error loading save file: ' + err.message);
+        }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+}
+
+// Initialize game
+generatePlanetColors();
+generateSudokuGrid();
+initializeCells();
+renderPlanet();
+renderLeaderboard();
+renderTrancheVisual();
+updateHeaderTranche();
+
+document.getElementById('teamNameInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        createTeam();
+    }
+});
+</script>
+</body>
+</html>
