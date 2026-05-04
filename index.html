@@ -16,20 +16,16 @@ h1{font-family:'IBM Plex Mono',monospace;font-size:4.6rem;font-weight:700;letter
 .stat-value{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:700}
 .day-value{color:#00ffff;text-shadow:0 0 20px rgba(0,255,255,0.5)}
 .destroyed-value{color:#ff4444;text-shadow:0 0 20px rgba(255,68,68,0.5)}
-.header-current-tranche{margin-top:8px;text-align:center;min-width:350px}
-.current-tranche-label{font-family:'Courier New',Courier,monospace;font-size:0.85rem;color:#888;margin-bottom:6px}
-.current-tranche-label span:first-of-type{color:#fff;font-weight:700;font-size:1rem}
-.current-tranche-penalty{color:#ff4444!important;font-weight:400!important}
-.current-tranche-bar-container{height:28px;background:rgba(255,255,255,0.08);border-radius:6px;overflow:hidden;border:2px solid rgba(255,255,255,0.3);display:flex;backdrop-filter:blur(10px);box-shadow:0 2px 8px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -1px 0 rgba(0,0,0,0.1)}
-.current-tranche-bar{display:flex;height:100%;width:100%}
-.current-tranche-segment{height:100%;min-width:2px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:0.9rem;font-weight:700;color:#000}
-.current-tranche-legend{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:6px;font-family:'Courier New',Courier,monospace;font-size:0.7rem}
+.header-current-cluster{margin-top:8px;text-align:center;min-width:350px}
+.current-cluster-label{font-family:'Courier New',Courier,monospace;font-size:0.85rem;color:#888;margin-bottom:6px}
+.current-cluster-label span:first-of-type{color:#fff;font-weight:700;font-size:1rem}
+.current-cluster-penalty{color:#ff4444!important;font-weight:400!important}
+.current-cluster-bar-container{height:28px;background:rgba(255,255,255,0.08);border-radius:6px;overflow:hidden;border:2px solid rgba(255,255,255,0.3);display:flex;backdrop-filter:blur(10px);box-shadow:0 2px 8px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -1px 0 rgba(0,0,0,0.1)}
+.current-cluster-bar{display:flex;height:100%;width:100%}
+.current-cluster-segment{height:100%;min-width:2px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:0.9rem;font-weight:700;color:#000}
+.current-cluster-legend{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:6px;font-family:'Courier New',Courier,monospace;font-size:0.7rem}
 .current-legend-item{display:flex;align-items:center;gap:4px;color:#aaa}
 .current-legend-color{width:10px;height:10px;border-radius:2px}
-.header-buttons{display:flex;justify-content:center;gap:10px;margin-top:10px}
-.header-btn{padding:6px 14px;background:rgba(20,20,30,0.8);border:1px solid #4a4a6a;border-radius:6px;color:#aaa;font-family:'Courier New',Courier,monospace;font-size:0.75rem;cursor:pointer;transition:all 0.2s}
-.header-btn:hover{background:rgba(40,40,60,0.9);border-color:#00ffff;color:#fff}
-.header-btn.active{background:rgba(0,255,255,0.15);border-color:#00ffff;color:#00ffff}
 .main-layout{display:grid;grid-template-columns:260px 1fr 250px;gap:12px;flex:1;min-height:0}
 .teams-panel{background:#12121a;border-radius:10px;padding:12px;border:1px solid #2a2a3a;overflow-y:auto}
 .panel-title{font-family:'Courier New',Courier,monospace;font-size:0.75rem;color:#888;letter-spacing:0.15em;margin-bottom:10px;text-transform:uppercase}
@@ -76,7 +72,13 @@ h1{font-family:'IBM Plex Mono',monospace;font-size:4.6rem;font-weight:700;letter
 .cell.closed .anova-value{display:block!important;color:#ffffff!important;text-shadow:0 0 12px rgba(255,255,255,0.8),0 2px 6px rgba(0,0,0,1),1px 1px 0 rgba(0,0,0,1),-1px -1px 0 rgba(0,0,0,1)!important;font-size:1.1rem!important;font-weight:900!important}
 .cell.closed .cell-id{display:none!important}
 .cell.selected{border:3px solid rgba(255,255,255,0.9);transform:scale(1.2);z-index:5;background:rgba(255,255,255,0.2);box-shadow:0 8px 24px rgba(255,255,255,0.3)}
-.info-panel{background:#12121a;border-radius:10px;padding:12px;border:1px solid #2a2a3a;overflow-y:auto}
+/* Info panel */
+.info-panel{background:#12121a;border-radius:10px;padding:12px;border:1px solid #2a2a3a;overflow-y:auto;display:flex;flex-direction:column}
+.info-panel-bottom{margin-top:auto;padding-top:10px;border-top:1px solid #2a2a3a;display:flex;flex-direction:column;gap:6px}
+.panel-buttons{display:flex;flex-wrap:wrap;gap:6px}
+.panel-btn{padding:6px 10px;background:rgba(20,20,30,0.8);border:1px solid #4a4a6a;border-radius:6px;color:#aaa;font-family:'Courier New',Courier,monospace;font-size:0.7rem;cursor:pointer;transition:all 0.2s;flex:1;text-align:center}
+.panel-btn:hover{background:rgba(40,40,60,0.9);border-color:#00ffff;color:#fff}
+.panel-btn.active{background:rgba(0,255,255,0.15);border-color:#00ffff;color:#00ffff}
 .action-panel{background:#1a1a24;border-radius:6px;padding:10px;margin-bottom:10px}
 .action-title{font-size:0.8rem;margin-bottom:8px;color:#aaa}
 .selected-cell-info{font-family:'Courier New',Courier,monospace;font-size:1rem;margin-bottom:10px}
@@ -92,16 +94,16 @@ h1{font-family:'IBM Plex Mono',monospace;font-size:4.6rem;font-weight:700;letter
 .leaderboard-entry{display:flex;justify-content:space-between;padding:5px;background:#1a1a24;border-radius:4px;margin-bottom:3px;font-family:'IBM Plex Mono',monospace;font-size:0.7rem}
 .leaderboard-entry.leader{border:1px solid #00ff88}
 .no-team-selected{color:#666;text-align:center;padding:20px 10px;font-style:italic}
-.end-game-btn{margin-top:10px;width:100%;background:#ff444433;color:#ff4444;border:1px solid #ff4444}
+.end-game-btn{width:100%;background:#ff444433;color:#ff4444;border:1px solid #ff4444;padding:7px}
 .end-game-btn:hover{background:#ff444466}
-.tranche-visual{margin-top:10px;max-height:150px;overflow-y:auto}
-.tranche-block{margin-bottom:8px;padding:6px;background:#1a1a24;border-radius:4px;border-left:3px solid #3a3a4a}
-.tranche-block.complete{border-left-color:#ff4444}
-.tranche-header{font-family:'Courier New',Courier,monospace;font-size:0.7rem;color:#888;margin-bottom:4px;display:flex;justify-content:space-between}
-.tranche-penalty{color:#ff4444}
-.tranche-bar-container{height:12px;background:#2a2a3a;border-radius:2px;display:flex;overflow:hidden}
-.tranche-segment{height:100%}
-.tranche-legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;font-size:0.6rem;font-family:'Courier New',Courier,monospace}
+.cluster-visual{margin-top:10px;max-height:150px;overflow-y:auto}
+.cluster-block{margin-bottom:8px;padding:6px;background:#1a1a24;border-radius:4px;border-left:3px solid #3a3a4a}
+.cluster-block.complete{border-left-color:#ff4444}
+.cluster-header{font-family:'Courier New',Courier,monospace;font-size:0.7rem;color:#888;margin-bottom:4px;display:flex;justify-content:space-between}
+.cluster-penalty{color:#ff4444}
+.cluster-bar-container{height:12px;background:#2a2a3a;border-radius:2px;display:flex;overflow:hidden}
+.cluster-segment{height:100%}
+.cluster-legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;font-size:0.6rem;font-family:'Courier New',Courier,monospace}
 .legend-item{display:flex;align-items:center;gap:3px;color:#aaa}
 .legend-color{width:8px;height:8px;border-radius:2px}
 /* Overlays */
@@ -165,7 +167,7 @@ h1{font-family:'IBM Plex Mono',monospace;font-size:4.6rem;font-weight:700;letter
 .penalty-notification-team{font-family:'IBM Plex Mono',monospace;font-size:1.5rem;font-weight:700;color:#ffff00;margin-bottom:8px}
 .penalty-notification-amount{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:700;color:#fff}
 .penalty-notification-reason{font-family:'IBM Plex Mono',monospace;font-size:0.8rem;color:#ffcccc;margin-top:8px}
-/* Zero / Void Strike popup */
+/* ANOVA LOST popup */
 .zero-popup{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.92);z-index:2000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
 .zero-popup-inner{text-align:center;padding:40px 60px;border:3px solid #ff4444;border-radius:16px;background:#0a0010;box-shadow:0 0 60px rgba(255,68,68,0.4),inset 0 0 40px rgba(255,68,68,0.05);animation:zeroAppear 0.4s ease-out}
 @keyframes zeroAppear{from{transform:scale(0.7);opacity:0}to{transform:scale(1);opacity:1}}
@@ -174,12 +176,26 @@ h1{font-family:'IBM Plex Mono',monospace;font-size:4.6rem;font-weight:700;letter
 .zero-title{font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:700;color:#ff4444;letter-spacing:0.2em;text-shadow:0 0 20px rgba(255,68,68,0.8);margin-bottom:8px}
 .zero-cell-id{font-family:'IBM Plex Mono',monospace;font-size:1rem;color:#888;margin-bottom:4px}
 .zero-team{font-family:'IBM Plex Mono',monospace;font-size:1rem;color:#aaa;margin-bottom:20px}
-.zero-message{font-family:'IBM Plex Mono',monospace;font-size:0.85rem;color:#cc8888;line-height:1.6;margin-bottom:24px}
 .zero-lost-label{font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:#888;letter-spacing:0.15em;margin-bottom:6px}
 .zero-lost-amount{font-family:'IBM Plex Mono',monospace;font-size:3.5rem;font-weight:700;color:#ff4444;text-shadow:0 0 30px rgba(255,68,68,0.7);margin-bottom:28px}
 .zero-confirm-btn{padding:12px 36px;background:transparent;border:2px solid #ff4444;border-radius:8px;color:#ff4444;font-family:'IBM Plex Mono',monospace;font-size:0.9rem;cursor:pointer;transition:all 0.2s;letter-spacing:0.1em}
 .zero-confirm-btn:hover{background:rgba(255,68,68,0.15);color:#fff}
-@keyframes vanishCell{0%{opacity:1;transform:scale(1)}30%{opacity:1;transform:scale(1.2);filter:brightness(2)}100%{opacity:0;transform:scale(0);filter:brightness(0)}}
+/* Glitch vanish animation */
+@keyframes glitchVanish{
+  0%  {opacity:1;transform:scale(1);filter:none;clip-path:inset(0 0 0 0)}
+  8%  {opacity:1;transform:scale(1) skewX(8deg);filter:hue-rotate(90deg) brightness(3);clip-path:inset(10% 0 10% 0)}
+  16% {opacity:0.7;transform:scale(1.05) skewX(-5deg) translateX(4px);filter:hue-rotate(180deg) brightness(2);clip-path:inset(30% 0 5% 0)}
+  24% {opacity:1;transform:scale(0.95) skewX(3deg) translateX(-6px);filter:hue-rotate(270deg) brightness(4);clip-path:inset(0 0 40% 0)}
+  32% {opacity:0.4;transform:scale(1.08) skewX(-8deg) translateX(8px);filter:brightness(6) saturate(0);clip-path:inset(50% 0 0 0)}
+  40% {opacity:0.8;transform:scale(0.9) skewX(5deg);filter:hue-rotate(60deg) brightness(3);clip-path:inset(0 0 60% 0)}
+  50% {opacity:0.3;transform:scale(1.1) translateX(-10px);filter:brightness(8) saturate(0) contrast(3);clip-path:inset(20% 5% 20% 5%)}
+  60% {opacity:0.6;transform:scale(0.85) skewX(-6deg) translateX(12px);filter:hue-rotate(300deg) brightness(2);clip-path:inset(0 10% 70% 10%)}
+  70% {opacity:0.2;transform:scale(1.15) skewX(10deg);filter:brightness(10) saturate(0);clip-path:inset(60% 0 0 0)}
+  80% {opacity:0.1;transform:scale(0.7) translateX(-5px);filter:brightness(15) saturate(0);clip-path:inset(0 0 80% 0)}
+  90% {opacity:0.05;transform:scale(0.4) skewX(15deg);filter:brightness(20);clip-path:inset(40% 20% 40% 20%)}
+  100%{opacity:0;transform:scale(0);filter:brightness(0);clip-path:inset(50% 50% 50% 50%)}
+}
+.cell.glitch-vanish{animation:glitchVanish 1.1s ease-in forwards;pointer-events:none}
 </style>
 </head>
 <body>
@@ -193,16 +209,10 @@ h1{font-family:'IBM Plex Mono',monospace;font-size:4.6rem;font-weight:700;letter
       <div class="header-stat-row"><span class="stat-label">TOTAL DESTROYED</span><span class="stat-value destroyed-value" id="destroyedValue">0</span></div>
       <div class="header-stat-row"><span class="stat-label">TOTAL LOST</span><span class="stat-value" style="color:#888" id="lostValue">0</span></div>
     </div>
-    <div class="header-current-tranche">
-      <div class="current-tranche-label">CURRENT TRANCHE: <span id="currentTrancheRange">1-100</span> <span class="current-tranche-penalty" id="currentTranchePenalty">(-10)</span></div>
-      <div class="current-tranche-bar-container"><div class="current-tranche-bar" id="currentTrancheBar"></div></div>
-      <div class="current-tranche-legend" id="currentTrancheLegend"></div>
-    </div>
-    <div class="header-buttons">
-      <button class="header-btn" id="toggleValuesBtn" onclick="toggleValues()">SHOW VALUES</button>
-      <button class="header-btn" id="toggleMinedBtn" onclick="toggleMined()">SHOW MINED</button>
-      <button class="header-btn" onclick="saveGame()">SAVE</button>
-      <label class="header-btn" style="cursor:pointer">LOAD<input type="file" id="loadGameInput" accept=".json" onchange="loadGame(event)" style="display:none"></label>
+    <div class="header-current-cluster">
+      <div class="current-cluster-label">CURRENT CLUSTER: <span id="currentClusterRange">1-100</span> <span class="current-cluster-penalty" id="currentClusterPenalty">(-10)</span></div>
+      <div class="current-cluster-bar-container"><div class="current-cluster-bar" id="currentClusterBar"></div></div>
+      <div class="current-cluster-legend" id="currentClusterLegend"></div>
     </div>
   </header>
 
@@ -231,11 +241,22 @@ h1{font-family:'IBM Plex Mono',monospace;font-size:4.6rem;font-weight:700;letter
       <div class="action-panel" id="actionPanel"><div class="no-team-selected">Create a team to begin mining operations</div></div>
       <div class="panel-title" style="margin-top:10px">Leaderboard</div>
       <div class="leaderboard" id="leaderboard"></div>
-      <button class="btn end-game-btn" onclick="endGame()">END GAME</button>
-      <div class="panel-title" style="margin-top:10px">Exhausted Tranches</div>
-      <div class="tranche-visual" id="trancheVisual"></div>
+      <div class="panel-title" style="margin-top:10px">Exhausted Clusters</div>
+      <div class="cluster-visual" id="clusterVisual"></div>
       <div class="panel-title" style="margin-top:10px">Activity Log</div>
       <div class="game-log" id="gameLog"></div>
+
+      <div class="info-panel-bottom">
+        <div class="panel-buttons">
+          <button class="panel-btn" id="toggleValuesBtn" onclick="toggleValues()">SHOW VALUES</button>
+          <button class="panel-btn" id="toggleMinedBtn" onclick="toggleMined()">SHOW MINED</button>
+        </div>
+        <div class="panel-buttons">
+          <button class="panel-btn" onclick="saveGame()">SAVE</button>
+          <label class="panel-btn" style="cursor:pointer;display:flex;align-items:center;justify-content:center">LOAD<input type="file" id="loadGameInput" accept=".json" onchange="loadGame(event)" style="display:none"></label>
+        </div>
+        <button class="btn end-game-btn" onclick="endGame()">END GAME</button>
+      </div>
     </div>
   </div>
 </div>
@@ -271,14 +292,13 @@ h1{font-family:'IBM Plex Mono',monospace;font-size:4.6rem;font-weight:700;letter
   </div>
 </div>
 
-<!-- Void Strike popup -->
+<!-- ANOVA LOST popup -->
 <div class="zero-popup" id="zeroPopup" style="display:none">
   <div class="zero-popup-inner">
     <div class="zero-skull">💀</div>
-    <div class="zero-title">VOID STRIKE</div>
+    <div class="zero-title">ANOVA LOST</div>
     <div class="zero-cell-id" id="zeroCellId"></div>
     <div class="zero-team" id="zeroTeamLabel"></div>
-    <div class="zero-message">This sector contains <strong>zero ANOVA</strong>.<br>The entire row and column are now sealed.</div>
     <div class="zero-lost-label">ANOVA LOST TO THE VOID</div>
     <div class="zero-lost-amount" id="zeroLostAmount">0</div>
     <button class="zero-confirm-btn" onclick="confirmZeroMine()">ACKNOWLEDGE</button>
@@ -297,23 +317,22 @@ h1{font-family:'IBM Plex Mono',monospace;font-size:4.6rem;font-weight:700;letter
 <!-- Penalty notification -->
 <div class="penalty-notification" id="penaltyNotification" style="display:none">
   <div class="penalty-notification-icon">⚠️</div>
-  <div class="penalty-notification-title">Tranche Penalty</div>
+  <div class="penalty-notification-title">Cluster Penalty</div>
   <div class="penalty-notification-team" id="penaltyTeamName"></div>
   <div class="penalty-notification-amount" id="penaltyAmount"></div>
   <div class="penalty-notification-reason" id="penaltyReason"></div>
 </div>
 
 <script>
-// ─── State ───────────────────────────────────────────────────────────────────
 let gameState = {
-  teams: [], cells: {}, selectedTeam: null, selectedCell: null,
-  currentDay: 1, log: [], gameOver: false,
-  trancheContributions: {}, totalLost: 0
+  teams:[], cells:{}, selectedTeam:null, selectedCell:null,
+  currentDay:1, log:[], gameOver:false,
+  clusterContributions:{}, totalLost:0
 };
 
 const gameConfig = {
-  basePenalty: 10, penaltyType: "add", penaltyAdd: 10,
-  penaltyMultiply: 1.5, dayLimit: 0
+  basePenalty:10, penaltyType:"add", penaltyAdd:10,
+  penaltyMultiply:1.5, dayLimit:0
 };
 
 const teamColors = [
@@ -323,11 +342,11 @@ const teamColors = [
 
 const rowConfig = Array.from({length:11},(_,i)=>({row:i,letters:"ABCDEFGHIJK"}));
 let sudokuGrid = [];
-let showingValues = false, showingMined = false;
+let showingValues=false, showingMined=false;
 
-// ─── Planet colour ───────────────────────────────────────────────────────────
+// ─── Planet colour ────────────────────────────────────────────────────────────
 function generatePlanetColors() {
-  const types = [
+  const types=[
     {light:'#5a9acc',mid:'#3a7aac',dark:'#2a5a8c',darker:'#1a4a6c',darkest:'#0a3a4c',highlight:'rgba(150,220,255,0.3)',glow:'rgba(100,180,255,0.5)'},
     {light:'#cc6a4a',mid:'#ac4a2a',dark:'#8c3a1a',darker:'#6c2a0a',darkest:'#4c1a00',highlight:'rgba(255,150,100,0.3)',glow:'rgba(255,100,50,0.5)'},
     {light:'#aa5acc',mid:'#8a3aac',dark:'#6a2a8c',darker:'#4a1a6c',darkest:'#3a0a4c',highlight:'rgba(200,150,255,0.3)',glow:'rgba(180,100,255,0.5)'},
@@ -337,83 +356,61 @@ function generatePlanetColors() {
     {light:'#cc5a9a',mid:'#ac3a7a',dark:'#8c2a5a',darker:'#6c1a3a',darkest:'#4c0a2a',highlight:'rgba(255,150,200,0.3)',glow:'rgba(255,100,180,0.5)'},
     {light:'#cccc4a',mid:'#acac2a',dark:'#8c8c1a',darker:'#6c6c0a',darkest:'#4c4c00',highlight:'rgba(255,255,150,0.3)',glow:'rgba(255,255,100,0.5)'}
   ];
-  const p = types[Math.floor(Math.random()*types.length)];
-  const r = document.documentElement;
-  r.style.setProperty('--planet-light',p.light);
-  r.style.setProperty('--planet-mid',p.mid);
-  r.style.setProperty('--planet-dark',p.dark);
-  r.style.setProperty('--planet-darker',p.darker);
-  r.style.setProperty('--planet-darkest',p.darkest);
-  r.style.setProperty('--planet-highlight',p.highlight);
+  const p=types[Math.floor(Math.random()*types.length)];
+  const r=document.documentElement;
+  r.style.setProperty('--planet-light',p.light);r.style.setProperty('--planet-mid',p.mid);
+  r.style.setProperty('--planet-dark',p.dark);r.style.setProperty('--planet-darker',p.darker);
+  r.style.setProperty('--planet-darkest',p.darkest);r.style.setProperty('--planet-highlight',p.highlight);
   r.style.setProperty('--planet-glow-inner',p.glow);
   r.style.setProperty('--planet-glow-mid',p.glow.replace('0.5','0.3'));
   r.style.setProperty('--planet-glow-outer',p.glow.replace('0.5','0.15'));
 }
 
-// ─── Grid generation ─────────────────────────────────────────────────────────
+// ─── Grid generation ──────────────────────────────────────────────────────────
 function generateSudokuGrid() {
-  sudokuGrid = [];
-  const offset = Math.floor(Math.random()*11);
-  for (let r=0;r<11;r++) {
-    const row=[];
-    for (let c=0;c<11;c++) row.push((r+3*c+offset)%11);
-    sudokuGrid.push(row);
-  }
+  sudokuGrid=[];
+  const offset=Math.floor(Math.random()*11);
+  for (let r=0;r<11;r++){const row=[];for(let c=0;c<11;c++)row.push((r+3*c+offset)%11);sudokuGrid.push(row);}
 }
 
 function initializeCells() {
-  gameState.cells = {};
-  rowConfig.forEach(({row,letters}) => {
-    for (const letter of letters) {
-      const id = `${row}${letter}`;
-      const col = letter.charCodeAt(0)-65;
-      gameState.cells[id] = {
-        id, row, letter,
-        anova: (sudokuGrid[row]?.[col] ?? 0)*10,
-        mined:false, minedBy:null, revealed:false, closed:false
-      };
+  gameState.cells={};
+  rowConfig.forEach(({row,letters})=>{
+    for(const letter of letters){
+      const id=`${row}${letter}`,col=letter.charCodeAt(0)-65;
+      gameState.cells[id]={id,row,letter,anova:(sudokuGrid[row]?.[col]??0)*10,mined:false,minedBy:null,revealed:false,closed:false};
     }
   });
 }
 
-// ─── Rendering ───────────────────────────────────────────────────────────────
+// ─── Rendering ────────────────────────────────────────────────────────────────
 function renderPlanet() {
-  const grid = document.getElementById('planetGrid');
+  const grid=document.getElementById('planetGrid');
   grid.innerHTML='';
   grid.className='planet-grid'+(showingMined?' show-mined-mode':'');
   document.getElementById('planetArrows').innerHTML='';
-
-  rowConfig.forEach(({row,letters}) => {
-    const rowDiv=document.createElement('div');
-    rowDiv.className='planet-row';
-    for (const letter of letters) {
-      const id=`${row}${letter}`, cell=gameState.cells[id];
-      if (!cell) continue;
-      const div=document.createElement('div');
-      div.className='cell';
-      div.setAttribute('data-cell-id',id);
-      div.setAttribute('data-row',row);
-      div.setAttribute('data-col',letter.charCodeAt(0)-65);
-      if (cell.mined) div.classList.add('mined');
-      if (cell.closed) div.classList.add('closed');
-      if (gameState.selectedCell===id) div.classList.add('selected');
-      if (showingValues) div.classList.add('show-value');
-      if (showingMined&&cell.mined) div.classList.add('show-mined-value');
-
-      if (cell.mined&&cell.minedBy) {
-        const t=gameState.teams.find(t=>t.id===cell.minedBy);
-        const tc=t?t.color:'#888';
-        div.style.borderColor=tc;
-        div.style.boxShadow=`0 0 15px ${tc}`;
+  rowConfig.forEach(({row,letters})=>{
+    const rowDiv=document.createElement('div');rowDiv.className='planet-row';
+    for(const letter of letters){
+      const id=`${row}${letter}`,cell=gameState.cells[id];
+      if(!cell)continue;
+      const div=document.createElement('div');div.className='cell';
+      div.setAttribute('data-cell-id',id);div.setAttribute('data-row',row);div.setAttribute('data-col',letter.charCodeAt(0)-65);
+      if(cell.mined)div.classList.add('mined');
+      if(cell.closed)div.classList.add('closed');
+      if(gameState.selectedCell===id)div.classList.add('selected');
+      if(showingValues)div.classList.add('show-value');
+      if(showingMined&&cell.mined)div.classList.add('show-mined-value');
+      if(cell.mined&&cell.minedBy){
+        const t=gameState.teams.find(t=>t.id===cell.minedBy),tc=t?t.color:'#888';
+        div.style.borderColor=tc;div.style.boxShadow=`0 0 15px ${tc}`;
         div.innerHTML=`<span class="anova-value" style="color:${tc};text-shadow:0 0 20px ${tc},0 0 10px ${tc};font-size:1rem;font-weight:900">${cell.anova}</span>`;
-      } else if (cell.closed) {
+      } else if(cell.closed){
         div.innerHTML=`<span class="anova-value">${cell.anova}</span>`;
       } else {
         div.innerHTML=`<span class="cell-id">${id}</span><span class="anova-value">${cell.anova}</span>`;
       }
-
-      div.onclick=()=>selectCell(id);
-      rowDiv.appendChild(div);
+      div.onclick=()=>selectCell(id);rowDiv.appendChild(div);
     }
     grid.appendChild(rowDiv);
   });
@@ -422,94 +419,75 @@ function renderPlanet() {
 
 function addPersistentArrows() {
   const container=document.getElementById('planetArrows');
-  if (!container) return;
+  if(!container)return;
   const cr=container.getBoundingClientRect();
   Object.values(gameState.cells).forEach(cell=>{
-    if (!cell.mined) return;
-    const el=document.querySelector(`[data-cell-id="${cell.id}"]`);
-    if (!el) return;
-    const dirs=findZeroDirections(cell);
-    if (!dirs.length) return;
-    const rect=el.getBoundingClientRect();
-    const cx=rect.left+rect.width/2-cr.left, cy=rect.top+rect.height/2-cr.top;
-    const off=42/2+32/2;
+    if(!cell.mined)return;
+    const el=document.querySelector(`[data-cell-id="${cell.id}"]`);if(!el)return;
+    const dirs=findZeroDirections(cell);if(!dirs.length)return;
+    const rect=el.getBoundingClientRect(),cx=rect.left+rect.width/2-cr.left,cy=rect.top+rect.height/2-cr.top,off=42/2+32/2;
     dirs.forEach(dir=>{
-      const a=document.createElement('div');
-      a.textContent=dir;
+      const a=document.createElement('div');a.textContent=dir;
       a.style.cssText=`position:absolute;font-size:1.5rem;color:#ff4444;text-shadow:0 0 8px rgba(255,68,68,1);font-weight:bold;z-index:10;pointer-events:none;transform:translate(-50%,-50%);line-height:1`;
-      const pos={
-        '→':[cx+off,cy],'←':[cx-off,cy],'↓':[cx,cy+off],'↑':[cx,cy-off],
-        '↘':[cx+off,cy+off],'↖':[cx-off,cy-off],'↙':[cx-off,cy+off],'↗':[cx+off,cy-off]
-      }[dir];
-      if (pos){a.style.left=pos[0]+'px';a.style.top=pos[1]+'px';container.appendChild(a);}
+      const pos={'→':[cx+off,cy],'←':[cx-off,cy],'↓':[cx,cy+off],'↑':[cx,cy-off],'↘':[cx+off,cy+off],'↖':[cx-off,cy-off],'↙':[cx-off,cy+off],'↗':[cx+off,cy-off]}[dir];
+      if(pos){a.style.left=pos[0]+'px';a.style.top=pos[1]+'px';container.appendChild(a);}
     });
   });
 }
 
 function findZeroDirections(cell) {
-  const dirs=[], cc=cell.letter.charCodeAt(0)-65;
+  const dirs=[],cc=cell.letter.charCodeAt(0)-65;
   Object.values(gameState.cells).filter(c=>c.anova===0&&!c.mined).forEach(zc=>{
     const zc_col=zc.letter.charCodeAt(0)-65;
-    if (zc.row===cell.row) dirs.push(zc_col<cc?'←':'→');
-    if (zc.letter===cell.letter) dirs.push(zc.row<cell.row?'↑':'↓');
-    if (cell.row===cc&&zc.row===zc_col) dirs.push(zc.row<cell.row?'↖':'↘');
-    if (cell.row+cc===10&&zc.row+zc_col===10) dirs.push(zc.row<cell.row?'↗':'↙');
+    if(zc.row===cell.row)dirs.push(zc_col<cc?'←':'→');
+    if(zc.letter===cell.letter)dirs.push(zc.row<cell.row?'↑':'↓');
+    if(cell.row===cc&&zc.row===zc_col)dirs.push(zc.row<cell.row?'↖':'↘');
+    if(cell.row+cc===10&&zc.row+zc_col===10)dirs.push(zc.row<cell.row?'↗':'↙');
   });
   return [...new Set(dirs)];
 }
 
 function renderTeams() {
-  const list=document.getElementById('teamList');
-  list.innerHTML='';
+  const list=document.getElementById('teamList');list.innerHTML='';
   [...gameState.teams].sort((a,b)=>a.freeDay-b.freeDay).forEach(team=>{
     const div=document.createElement('div');
     div.className='team-card'+(team.id===gameState.selectedTeam?' active':'')+(team.status==='mining'?' mining':'');
     const dot=`<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${team.color};margin-right:4px;box-shadow:0 0 8px ${team.color}"></span>`;
-    const statusTxt=team.status==='mining'?`Mining Until Day ${team.freeDay}`:'Ready';
+    const st=team.status==='mining'?`Mining Until Day ${team.freeDay}`:'Ready';
     const pen=team.penalties>0?`<div class="team-stats"><span style="color:#ff8800">-${team.penalties} penalty</span></div>`:'';
-    div.innerHTML=`<div class="team-name">${dot}${team.name} <span class="team-status ${team.status}">${statusTxt}</span></div><div class="team-stats"><span class="stat-extracted">▲ ${team.extracted}</span><span class="stat-destroyed">✕ ${team.destroyed}</span></div>${pen}`;
-    div.onclick=()=>{
-      if (team.status==='ready'){
-        gameState.selectedTeam=team.id;
-        gameState.selectedCell=null;
-        renderTeams();renderPlanet();updateActionPanel();
-      }
-    };
+    div.innerHTML=`<div class="team-name">${dot}${team.name} <span class="team-status ${team.status}">${st}</span></div><div class="team-stats"><span class="stat-extracted">▲ ${team.extracted}</span><span class="stat-destroyed">✕ ${team.destroyed}</span></div>${pen}`;
+    div.onclick=()=>{if(team.status==='ready'){gameState.selectedTeam=team.id;gameState.selectedCell=null;renderTeams();renderPlanet();updateActionPanel();}};
     list.appendChild(div);
   });
 }
 
 function renderLeaderboard() {
-  const board=document.getElementById('leaderboard');
-  board.innerHTML=[...gameState.teams].sort((a,b)=>(b.extracted-b.penalties)-(a.extracted-a.penalties)).map((t,i)=>{
-    const s=t.extracted-t.penalties;
-    const p=t.penalties>0?` <span style="color:#ff8800;font-size:0.6rem">(-${t.penalties})</span>`:'';
+  document.getElementById('leaderboard').innerHTML=[...gameState.teams].sort((a,b)=>(b.extracted-b.penalties)-(a.extracted-a.penalties)).map((t,i)=>{
+    const s=t.extracted-t.penalties,p=t.penalties>0?` <span style="color:#ff8800;font-size:0.6rem">(-${t.penalties})</span>`:'';
     return `<div class="leaderboard-entry ${i===0?'leader':''}"><span>${i+1}. ${t.name}</span><span style="color:${s>=0?'#00ff88':'#ff4444'}">▲ ${s}${p}</span></div>`;
   }).join('');
   updateTotals();
 }
 
-function renderTrancheVisual() {
-  const container=document.getElementById('trancheVisual');
-  const total=gameState.teams.reduce((s,t)=>s+t.destroyed,0);
-  const done=Math.floor(total/100);
+function renderClusterVisual() {
+  const container=document.getElementById('clusterVisual');
+  const total=gameState.teams.reduce((s,t)=>s+t.destroyed,0),done=Math.floor(total/100);
   let html='';
-  for (let i=done-1;i>=0;i--) {
+  for(let i=done-1;i>=0;i--){
     const rs=i*100+1,re=(i+1)*100;
     const pen=gameConfig.penaltyType==='add'?gameConfig.basePenalty+i*gameConfig.penaltyAdd:Math.round(gameConfig.basePenalty*Math.pow(gameConfig.penaltyMultiply,i));
-    const contrib=gameState.trancheContributions[i]||{};
-    html+=`<div class="tranche-block complete"><div class="tranche-header">${rs}-${re} <span class="tranche-penalty">(-${pen})</span> ✓</div><div class="tranche-bar-container">`;
-    gameState.teams.forEach(t=>{const c=contrib[t.id]||0;if(c>0)html+=`<div class="tranche-segment" style="width:${c}%;background:${t.color}"></div>`;});
+    const contrib=gameState.clusterContributions[i]||{};
+    html+=`<div class="cluster-block complete"><div class="cluster-header">${rs}-${re} <span class="cluster-penalty">(-${pen})</span> ✓</div><div class="cluster-bar-container">`;
+    gameState.teams.forEach(t=>{const c=contrib[t.id]||0;if(c>0)html+=`<div class="cluster-segment" style="width:${c}%;background:${t.color}"></div>`;});
     html+='</div>';
-    const keys=Object.keys(contrib);
-    if (keys.length){
-      html+='<div class="tranche-legend">';
+    if(Object.keys(contrib).length){
+      html+='<div class="cluster-legend">';
       gameState.teams.forEach(t=>{const c=contrib[t.id]||0;if(c>0)html+=`<span class="legend-item"><span class="legend-color" style="background:${t.color}"></span>${t.name}: ${c}</span>`;});
       html+='</div>';
     }
     html+='</div>';
   }
-  container.innerHTML=html||'<div style="color:#666;font-size:0.8rem;text-align:center;padding:10px">No exhausted tranches yet</div>';
+  container.innerHTML=html||'<div style="color:#666;font-size:0.8rem;text-align:center;padding:10px">No exhausted clusters yet</div>';
 }
 
 function renderLog() {
@@ -519,33 +497,31 @@ function renderLog() {
 function updateActionPanel() {
   const panel=document.getElementById('actionPanel');
   const team=gameState.teams.find(t=>t.id===gameState.selectedTeam);
-  if (!team){panel.innerHTML='<div class="no-team-selected">Create a team to begin mining operations</div>';return;}
-  if (team.status==='mining'){panel.innerHTML=`<div class="action-title">Team "${team.name}" is mining</div><div class="selected-cell-info">Location: ${team.location}</div><div style="color:#888;font-size:0.85rem">Free on Day ${team.freeDay}</div>`;return;}
-  if (!gameState.selectedCell){panel.innerHTML=`<div class="action-title">Team "${team.name}" — Ready</div><div class="no-team-selected">Select a cell on the planet to explore</div><button class="btn btn-pass" style="margin-top:10px" onclick="passTurn()">PASS (scout next day)</button>`;return;}
+  if(!team){panel.innerHTML='<div class="no-team-selected">Create a team to begin mining operations</div>';return;}
+  if(team.status==='mining'){panel.innerHTML=`<div class="action-title">Team "${team.name}" is mining</div><div class="selected-cell-info">Location: ${team.location}</div><div style="color:#888;font-size:0.85rem">Free on Day ${team.freeDay}</div>`;return;}
+  if(!gameState.selectedCell){panel.innerHTML=`<div class="action-title">Team "${team.name}" — Ready</div><div class="no-team-selected">Select a cell on the planet to explore</div><button class="btn btn-pass" style="margin-top:10px" onclick="passTurn()">PASS (scout next day)</button>`;return;}
   const cell=gameState.cells[gameState.selectedCell];
-  if (!cell){gameState.selectedCell=null;updateActionPanel();return;}
+  if(!cell){gameState.selectedCell=null;updateActionPanel();return;}
   panel.innerHTML=`<div class="action-title">Team "${team.name}"</div><div class="selected-cell-info">Selected: ${cell.id}</div><div class="anova-amount">${cell.anova} ANOVA</div><button class="btn btn-pass" style="margin-top:10px" onclick="passTurn()">PASS (scout another cell)</button>`;
 }
 
-function updateHeaderTranche() {
-  const total=gameState.teams.reduce((s,t)=>s+t.destroyed,0);
-  const ti=Math.floor(total/100);
+function updateHeaderCluster() {
+  const total=gameState.teams.reduce((s,t)=>s+t.destroyed,0),ti=Math.floor(total/100);
   const rs=ti*100+1,re=(ti+1)*100;
   const pen=gameConfig.penaltyType==='add'?gameConfig.basePenalty+ti*gameConfig.penaltyAdd:Math.round(gameConfig.basePenalty*Math.pow(gameConfig.penaltyMultiply,ti));
-  document.getElementById('currentTrancheRange').textContent=`${rs.toLocaleString()}-${re.toLocaleString()}`;
-  document.getElementById('currentTranchePenalty').textContent=`(-${pen})`;
-  const contrib=gameState.trancheContributions[ti]||{};
+  document.getElementById('currentClusterRange').textContent=`${rs.toLocaleString()}-${re.toLocaleString()}`;
+  document.getElementById('currentClusterPenalty').textContent=`(-${pen})`;
+  const contrib=gameState.clusterContributions[ti]||{};
   const sorted=gameState.teams.map(t=>({t,c:contrib[t.id]||0})).filter(x=>x.c>0).sort((a,b)=>a.c-b.c);
   let barH='',legH='';
   sorted.forEach(({t,c})=>{
-    barH+=`<div class="current-tranche-segment" style="width:${c}%;background:${t.color}">${c}</div>`;
+    barH+=`<div class="current-cluster-segment" style="width:${c}%;background:${t.color}">${c}</div>`;
     legH+=`<span class="current-legend-item"><span class="current-legend-color" style="background:${t.color}"></span>${t.name}: ${c}</span>`;
   });
-  const used=Object.values(contrib).reduce((s,v)=>s+v,0);
-  const rem=100-used;
-  if (rem>0) barH+=`<div class="current-tranche-segment" style="width:${rem}%;background:rgba(255,255,255,0.15);color:#fff">${rem}</div>`;
-  document.getElementById('currentTrancheBar').innerHTML=barH;
-  document.getElementById('currentTrancheLegend').innerHTML=legH;
+  const used=Object.values(contrib).reduce((s,v)=>s+v,0),rem=100-used;
+  if(rem>0)barH+=`<div class="current-cluster-segment" style="width:${rem}%;background:rgba(255,255,255,0.15);color:#fff">${rem}</div>`;
+  document.getElementById('currentClusterBar').innerHTML=barH;
+  document.getElementById('currentClusterLegend').innerHTML=legH;
 }
 
 function updateTotals() {
@@ -559,45 +535,37 @@ function updateTotals() {
   document.getElementById('lostValue').textContent=gameState.totalLost.toLocaleString();
 }
 
-// ─── Team creation ───────────────────────────────────────────────────────────
+// ─── Teams ────────────────────────────────────────────────────────────────────
 function createTeam() {
-  const input=document.getElementById('teamNameInput');
-  const name=input.value.trim();
-  if (!name) return;
-  if (gameState.teams.find(t=>t.name===name)){alert('Team name already exists!');return;}
-  if (gameState.teams.length>=teamColors.length){alert(`Maximum of ${teamColors.length} teams!`);return;}
+  const input=document.getElementById('teamNameInput'),name=input.value.trim();
+  if(!name)return;
+  if(gameState.teams.find(t=>t.name===name)){alert('Team name already exists!');return;}
+  if(gameState.teams.length>=teamColors.length){alert(`Maximum of ${teamColors.length} teams!`);return;}
   const team={id:Date.now(),name,color:teamColors[gameState.teams.length],extracted:0,destroyed:0,penalties:0,freeDay:1,status:'ready',location:null,speedChoices:{fast:0,medium:0,slow:0},scoreHistory:[],totalPotential:0};
-  gameState.teams.push(team);
-  input.value='';
-  if (!gameState.selectedTeam) gameState.selectedTeam=team.id;
+  gameState.teams.push(team);input.value='';
+  if(!gameState.selectedTeam)gameState.selectedTeam=team.id;
   addLog(`Team "${name}" joined the game`,'move');
   renderTeams();renderLeaderboard();updateActionPanel();
 }
 
-// ─── Cell selection & popups ─────────────────────────────────────────────────
+// ─── Cell selection ───────────────────────────────────────────────────────────
 function selectCell(id) {
   const cell=gameState.cells[id];
-  if (!cell||cell.mined||cell.closed||!gameState.selectedTeam) return;
+  if(!cell||cell.mined||cell.closed||!gameState.selectedTeam)return;
   const team=gameState.teams.find(t=>t.id===gameState.selectedTeam);
-  if (!team||team.status!=='ready') return;
-  gameState.selectedCell=id;
-  cell.revealed=true;
-  renderPlanet();
-  showMiningPopup(cell,team);
+  if(!team||team.status!=='ready')return;
+  gameState.selectedCell=id;cell.revealed=true;
+  renderPlanet();showMiningPopup(cell,team);
 }
 
 function showMiningPopup(cell,team) {
-  if (cell.anova===0){showZeroPopup(cell,team);return;}
+  if(cell.anova===0){showZeroPopup(cell,team);return;}
   document.getElementById('miningOverlay').style.display='block';
   const popup=document.getElementById('miningPopup');
-  popup.style.display='block';
-  popup.style.borderColor=team.color;
-  popup.style.boxShadow=`0 0 40px ${team.color}33`;
+  popup.style.display='block';popup.style.borderColor=team.color;popup.style.boxShadow=`0 0 40px ${team.color}33`;
   document.getElementById('popupCellId').textContent=cell.id;
-  const ad=document.getElementById('popupAnovaAmount');
-  ad.textContent=`${cell.anova} ANOVA`;ad.style.color=team.color;ad.style.textShadow=`0 0 30px ${team.color}99`;
-  document.getElementById('popupTeamName').textContent=team.name;
-  document.getElementById('popupTeamName').style.color=team.color;
+  const ad=document.getElementById('popupAnovaAmount');ad.textContent=`${cell.anova} ANOVA`;ad.style.color=team.color;ad.style.textShadow=`0 0 30px ${team.color}99`;
+  document.getElementById('popupTeamName').textContent=team.name;document.getElementById('popupTeamName').style.color=team.color;
   const v=cell.anova;
   const fD=Math.ceil(v/6),fDest=Math.min(fD*3,v),fExt=Math.min(v-fDest,fD*3);
   const mD=Math.ceil(v/3),mDest=Math.min(mD,v),mExt=v-mDest;
@@ -609,9 +577,7 @@ function showMiningPopup(cell,team) {
 
 function showZeroPopup(cell,team) {
   let lost=0;
-  Object.values(gameState.cells).forEach(c=>{
-    if (!c.mined&&!c.closed&&c.id!==cell.id&&(c.row===cell.row||c.letter===cell.letter)) lost+=c.anova;
-  });
+  Object.values(gameState.cells).forEach(c=>{if(!c.mined&&!c.closed&&c.id!==cell.id&&(c.row===cell.row||c.letter===cell.letter))lost+=c.anova;});
   document.getElementById('zeroCellId').textContent=`Cell ${cell.id}`;
   document.getElementById('zeroTeamLabel').innerHTML=`Team: <span style="color:${team.color}">${team.name}</span>`;
   document.getElementById('zeroLostAmount').textContent=lost.toLocaleString();
@@ -621,7 +587,7 @@ function showZeroPopup(cell,team) {
 function confirmZeroMine() {
   const team=gameState.teams.find(t=>t.id===gameState.selectedTeam);
   const cell=gameState.cells[gameState.selectedCell];
-  if (!team||!cell){document.getElementById('zeroPopup').style.display='none';return;}
+  if(!team||!cell){document.getElementById('zeroPopup').style.display='none';return;}
   document.getElementById('zeroPopup').style.display='none';
 
   const affected=Object.values(gameState.cells)
@@ -633,26 +599,26 @@ function confirmZeroMine() {
   team.scoreHistory.push({day:gameState.currentDay,score:team.extracted-team.penalties});
   renderPlanet();
 
+  // Staggered glitch vanish — slightly slower spacing
   affected.forEach((id,i)=>{
     setTimeout(()=>{
       const el=document.querySelector(`[data-cell-id="${id}"]`);
-      if (el) el.style.animation=`vanishCell 0.5s ease-out ${i*30}ms forwards`;
-    },0);
+      if(el){el.classList.add('glitch-vanish');}
+    }, i*55);
   });
 
   setTimeout(()=>{
     checkRowClosures(cell);
     gameState.selectedCell=null;
-    addLog(`${team.name} hit VOID at ${cell.id} — row & column sealed`,'destroy');
+    addLog(`${team.name} triggered ANOVA LOST at ${cell.id} — row & column sealed`,'destroy');
     advanceToNextTeam();
-  }, affected.length*30+600);
+  }, affected.length*55+1200);
 }
 
 function closeMiningPopup() {
   document.getElementById('miningOverlay').style.display='none';
   document.getElementById('miningPopup').style.display='none';
-  gameState.selectedCell=null;
-  renderPlanet();updateActionPanel();
+  gameState.selectedCell=null;renderPlanet();updateActionPanel();
 }
 
 function selectMiningSpeed(speed) {
@@ -664,23 +630,19 @@ function selectMiningSpeed(speed) {
 function showMiningAnimation(speed) {
   const team=gameState.teams.find(t=>t.id===gameState.selectedTeam);
   const cell=gameState.cells[gameState.selectedCell];
-  if (!team||!cell) return;
-  const v=cell.anova;
-  let destroyed=0,extracted=0,days=0;
-  if (speed==='fast'){days=Math.ceil(v/6);destroyed=Math.min(days*3,v);extracted=Math.min(v-destroyed,days*3);}
-  else if (speed==='medium'){days=Math.ceil(v/3);destroyed=Math.min(days,v);extracted=v-destroyed;}
+  if(!team||!cell)return;
+  const v=cell.anova;let destroyed=0,extracted=0,days=0;
+  if(speed==='fast'){days=Math.ceil(v/6);destroyed=Math.min(days*3,v);extracted=Math.min(v-destroyed,days*3);}
+  else if(speed==='medium'){days=Math.ceil(v/3);destroyed=Math.min(days,v);extracted=v-destroyed;}
   else{days=v;extracted=v;}
   team.speedChoices[speed]++;
-  const anim=document.getElementById('miningAnimation');
-  anim.style.display='flex';
-  const sparks=document.getElementById('miningSparks');
-  sparks.innerHTML='';
+  const anim=document.getElementById('miningAnimation');anim.style.display='flex';
+  const sparks=document.getElementById('miningSparks');sparks.innerHTML='';
   const iv=setInterval(()=>{
     for(let i=0;i<5;i++){
       const s=document.createElement('div');s.className='spark';
       const angle=Math.random()*Math.PI*2,dist=50+Math.random()*100;
-      s.style.setProperty('--tx',`${Math.cos(angle)*dist}px`);
-      s.style.setProperty('--ty',`${Math.sin(angle)*dist}px`);
+      s.style.setProperty('--tx',`${Math.cos(angle)*dist}px`);s.style.setProperty('--ty',`${Math.sin(angle)*dist}px`);
       s.style.background=['#ffff00','#ff8800','#fff','#00ffff'][Math.floor(Math.random()*4)];
       sparks.appendChild(s);setTimeout(()=>s.remove(),600);
     }
@@ -694,111 +656,91 @@ function showMiningAnimation(speed) {
     cell.mined=true;cell.minedBy=team.id;
     team.scoreHistory.push({day:gameState.currentDay,score:team.extracted-team.penalties});
     addLog(`${team.name} mined ${cell.id} (${speedTxt}): +${extracted}, -${destroyed}`,extracted>0?'extract':'destroy');
-    if (destroyed>0) checkTranchePenalties(team,destroyed);
-    else{updateTotals();renderTrancheVisual();updateHeaderTranche();}
-    checkRowClosures(cell);
-    gameState.selectedCell=null;
+    if(destroyed>0)checkClusterPenalties(team,destroyed);
+    else{updateTotals();renderClusterVisual();updateHeaderCluster();}
+    checkRowClosures(cell);gameState.selectedCell=null;
     setTimeout(()=>{anim.style.display='none';advanceToNextTeam();},500);
   },2000);
 }
 
 // ─── Game logic ───────────────────────────────────────────────────────────────
 function passTurn() {
-  const team=gameState.teams.find(t=>t.id===gameState.selectedTeam);
-  if (!team) return;
+  const team=gameState.teams.find(t=>t.id===gameState.selectedTeam);if(!team)return;
   team.freeDay=gameState.currentDay+1;
   team.scoreHistory.push({day:gameState.currentDay,score:team.extracted-team.penalties});
-  addLog(`${team.name} passed`,'move');
-  gameState.selectedCell=null;
-  advanceToNextTeam();
+  addLog(`${team.name} passed`,'move');gameState.selectedCell=null;advanceToNextTeam();
 }
 
 function checkRowClosures(cell) {
-  if (cell.anova!==0) return;
+  if(cell.anova!==0)return;
   let lost=0;
-  Object.values(gameState.cells).forEach(c=>{
-    if (!c.mined&&!c.closed&&(c.row===cell.row||c.letter===cell.letter)){c.closed=true;lost+=c.anova;}
-  });
+  Object.values(gameState.cells).forEach(c=>{if(!c.mined&&!c.closed&&(c.row===cell.row||c.letter===cell.letter)){c.closed=true;lost+=c.anova;}});
   gameState.totalLost+=lost;
   document.getElementById('lostValue').textContent=gameState.totalLost.toLocaleString();
 }
 
-function checkTranchePenalties(team,destroyed) {
+function checkClusterPenalties(team,destroyed) {
   const total=gameState.teams.reduce((s,t)=>s+t.destroyed,0);
   let remaining=destroyed,current=total-destroyed;
   while(remaining>0){
     const ti=Math.floor(current/100),te=(ti+1)*100,space=te-current,amt=Math.min(remaining,space);
-    if (!gameState.trancheContributions[ti]) gameState.trancheContributions[ti]={};
-    if (!gameState.trancheContributions[ti][team.id]) gameState.trancheContributions[ti][team.id]=0;
-    gameState.trancheContributions[ti][team.id]+=amt;
-    if (current+amt>=te){
+    if(!gameState.clusterContributions[ti])gameState.clusterContributions[ti]={};
+    if(!gameState.clusterContributions[ti][team.id])gameState.clusterContributions[ti][team.id]=0;
+    gameState.clusterContributions[ti][team.id]+=amt;
+    if(current+amt>=te){
       let maxTeam=null,maxC=0;
-      Object.entries(gameState.trancheContributions[ti]).forEach(([id,c])=>{if(c>maxC){maxC=c;maxTeam=gameState.teams.find(t=>t.id===parseInt(id));}});
-      if (maxTeam){
+      Object.entries(gameState.clusterContributions[ti]).forEach(([id,c])=>{if(c>maxC){maxC=c;maxTeam=gameState.teams.find(t=>t.id===parseInt(id));}});
+      if(maxTeam){
         const pen=gameConfig.penaltyType==='add'?gameConfig.basePenalty+ti*gameConfig.penaltyAdd:Math.round(gameConfig.basePenalty*Math.pow(gameConfig.penaltyMultiply,ti));
-        maxTeam.penalties+=pen;
-        maxTeam.scoreHistory.push({day:gameState.currentDay,score:maxTeam.extracted-maxTeam.penalties});
-        addLog(`⚠️ PENALTY: ${maxTeam.name} -${pen} (tranche ${ti*100+1}-${te})`,'destroy');
+        maxTeam.penalties+=pen;maxTeam.scoreHistory.push({day:gameState.currentDay,score:maxTeam.extracted-maxTeam.penalties});
+        addLog(`⚠️ CLUSTER PENALTY: ${maxTeam.name} -${pen} (cluster ${ti*100+1}-${te})`,'destroy');
         showPenaltyNotification(maxTeam.name,pen,ti*100+1,te);
       }
     }
     current+=amt;remaining-=amt;
   }
-  updateTotals();renderTrancheVisual();updateHeaderTranche();
+  updateTotals();renderClusterVisual();updateHeaderCluster();
 }
 
 function showPenaltyNotification(teamName,penalty,rs,re) {
   const n=document.getElementById('penaltyNotification');
   document.getElementById('penaltyTeamName').textContent=teamName;
   document.getElementById('penaltyAmount').textContent=`-${penalty} ANOVA`;
-  document.getElementById('penaltyReason').textContent=`Highest contributor to tranche ${rs}-${re}`;
+  document.getElementById('penaltyReason').textContent=`Highest contributor to cluster ${rs}-${re}`;
   n.style.display='block';n.classList.remove('hiding');
   setTimeout(()=>{n.classList.add('hiding');setTimeout(()=>n.style.display='none',500);},4000);
 }
 
 function advanceToNextTeam() {
-  const teams=gameState.teams;
-  if (!teams.length) return;
+  const teams=gameState.teams;if(!teams.length)return;
   teams.forEach(t=>{if(t.status==='mining'&&t.freeDay<=gameState.currentDay){t.status='ready';t.location=null;}});
   gameState.currentDay=Math.max(gameState.currentDay,Math.min(...teams.map(t=>t.freeDay)));
   teams.forEach(t=>{if(t.status==='mining'&&t.freeDay<=gameState.currentDay){t.status='ready';t.location=null;}});
-  const next=teams.find(t=>t.status==='ready');
-  if (next) gameState.selectedTeam=next.id;
+  const next=teams.find(t=>t.status==='ready');if(next)gameState.selectedTeam=next.id;
   document.getElementById('dayValue').textContent=gameState.currentDay;
-  renderTeams();renderPlanet();renderLeaderboard();renderTrancheVisual();updateTotals();updateHeaderTranche();updateActionPanel();
-  if (gameConfig.dayLimit>0&&gameState.currentDay>=gameConfig.dayLimit){endGame();return;}
-  if (!Object.values(gameState.cells).some(c=>!c.mined&&!c.closed)) endGame();
+  renderTeams();renderPlanet();renderLeaderboard();renderClusterVisual();updateTotals();updateHeaderCluster();updateActionPanel();
+  if(gameConfig.dayLimit>0&&gameState.currentDay>=gameConfig.dayLimit){endGame();return;}
+  if(!Object.values(gameState.cells).some(c=>!c.mined&&!c.closed))endGame();
 }
 
-function addLog(msg,type) {
-  gameState.log.unshift({message:msg,type,day:gameState.currentDay});
-  renderLog();
-}
+function addLog(msg,type){gameState.log.unshift({message:msg,type,day:gameState.currentDay});renderLog();}
 
-// ─── Toggle display modes ────────────────────────────────────────────────────
 function toggleValues() {
   showingValues=!showingValues;
-  const btn=document.getElementById('toggleValuesBtn');
-  btn.textContent=showingValues?'HIDE VALUES':'SHOW VALUES';
-  btn.classList.toggle('active',showingValues);
-  renderPlanet();
+  const btn=document.getElementById('toggleValuesBtn');btn.textContent=showingValues?'HIDE VALUES':'SHOW VALUES';btn.classList.toggle('active',showingValues);renderPlanet();
 }
 function toggleMined() {
   showingMined=!showingMined;
-  const btn=document.getElementById('toggleMinedBtn');
-  btn.textContent=showingMined?'HIDE MINED':'SHOW MINED';
-  btn.classList.toggle('active',showingMined);
-  renderPlanet();
+  const btn=document.getElementById('toggleMinedBtn');btn.textContent=showingMined?'HIDE MINED':'SHOW MINED';btn.classList.toggle('active',showingMined);renderPlanet();
 }
 
-// ─── End game ────────────────────────────────────────────────────────────────
+// ─── End game ─────────────────────────────────────────────────────────────────
 function endGame() {
-  if (gameState.gameOver) return;
+  if(gameState.gameOver)return;
   gameState.gameOver=true;
   const sorted=[...gameState.teams].sort((a,b)=>(b.extracted-b.penalties)-(a.extracted-a.penalties));
-  document.getElementById('overlay').style.display='block';
-  document.getElementById('winnerBanner').style.display='block';
-  if (!sorted.length){document.getElementById('winnerName').textContent='No teams!';return;}
+  document.getElementById('overlay').style.display='block';document.getElementById('winnerBanner').style.display='block';
+  if(!sorted.length){document.getElementById('winnerName').textContent='No teams!';return;}
   const winner=sorted[0];
   document.getElementById('winnerName').textContent=`🏆 ${winner.name} wins with ${winner.extracted-winner.penalties} ANOVA!`;
   const mostMined=[...gameState.teams].sort((a,b)=>b.extracted-a.extracted)[0];
@@ -806,7 +748,7 @@ function endGame() {
   const highPot=[...gameState.teams].sort((a,b)=>b.totalPotential-a.totalPotential)[0];
   const maxRate=Math.max(...gameState.teams.map(t=>{const d=t.freeDay-1;return d>0?(t.extracted-t.penalties)/d:0;}),1);
   const rateHtml=gameState.teams.map(t=>{const d=t.freeDay-1,r=d>0?(t.extracted-t.penalties)/d:0;return `<div class="speed-bar-row" style="margin-bottom:12px"><div class="speed-label" style="width:120px;color:${t.color}">${t.name}</div><div class="speed-bar" style="width:${Math.max((r/maxRate)*300,30)}px;background:${t.color}">${r.toFixed(1)}</div></div>`;}).join('');
-  const speedHtml=gameState.teams.map(t=>{const sc=t.speedChoices,tot=sc.fast+sc.medium+sc.slow;const fp=tot>0?(sc.fast/tot)*100:0,mp=tot>0?(sc.medium/tot)*100:0,cp=tot>0?(sc.slow/tot)*100:0;return `<div class="team-speed-chart"><div class="team-speed-chart-title" style="color:${t.color}">${t.name}</div><div class="speed-bars"><div class="speed-bar-row"><div class="speed-label fast">FAST</div><div class="speed-bar fast" style="width:${Math.max(fp,20)}px">${sc.fast}</div></div><div class="speed-bar-row"><div class="speed-label medium">MEDIUM</div><div class="speed-bar medium" style="width:${Math.max(mp,20)}px">${sc.medium}</div></div><div class="speed-bar-row"><div class="speed-label slow">CAREFUL</div><div class="speed-bar slow" style="width:${Math.max(cp,20)}px">${sc.slow}</div></div></div></div>`;}).join('');
+  const speedHtml=gameState.teams.map(t=>{const sc=t.speedChoices,tot=sc.fast+sc.medium+sc.slow,fp=tot>0?(sc.fast/tot)*100:0,mp=tot>0?(sc.medium/tot)*100:0,cp=tot>0?(sc.slow/tot)*100:0;return `<div class="team-speed-chart"><div class="team-speed-chart-title" style="color:${t.color}">${t.name}</div><div class="speed-bars"><div class="speed-bar-row"><div class="speed-label fast">FAST</div><div class="speed-bar fast" style="width:${Math.max(fp,20)}px">${sc.fast}</div></div><div class="speed-bar-row"><div class="speed-label medium">MEDIUM</div><div class="speed-bar medium" style="width:${Math.max(mp,20)}px">${sc.medium}</div></div><div class="speed-bar-row"><div class="speed-label slow">CAREFUL</div><div class="speed-bar slow" style="width:${Math.max(cp,20)}px">${sc.slow}</div></div></div></div>`;}).join('');
   document.getElementById('finalScores').innerHTML=`
     <div style="margin:20px 0;text-align:left">${gameState.teams.map(t=>{const s=t.extracted-t.penalties;return `<div style="margin:5px 0;font-family:'IBM Plex Mono',monospace;font-size:0.9rem"><span style="color:${t.color}">●</span> ${t.name}: ${t.extracted} mined, ${t.destroyed} destroyed${t.penalties>0?`, <span style="color:#ff8800">-${t.penalties} penalty</span>`:''} = <strong>${s} net</strong></div>`;}).join('')}</div>
     <div class="stats-section"><div class="stats-title">Superlatives</div><div style="text-align:left;margin:15px 0;font-family:'IBM Plex Mono',monospace;font-size:1rem;line-height:1.8">
@@ -819,51 +761,46 @@ function endGame() {
 }
 
 function resetGame() {
-  document.getElementById('overlay').style.display='none';
-  document.getElementById('winnerBanner').style.display='none';
-  gameState={teams:[],cells:{},selectedTeam:null,selectedCell:null,currentDay:1,log:[],gameOver:false,trancheContributions:{},totalLost:0};
+  document.getElementById('overlay').style.display='none';document.getElementById('winnerBanner').style.display='none';
+  gameState={teams:[],cells:{},selectedTeam:null,selectedCell:null,currentDay:1,log:[],gameOver:false,clusterContributions:{},totalLost:0};
   generatePlanetColors();generateSudokuGrid();initializeCells();
   showingValues=false;showingMined=false;
-  document.getElementById('toggleValuesBtn').textContent='SHOW VALUES';
-  document.getElementById('toggleValuesBtn').classList.remove('active');
-  document.getElementById('toggleMinedBtn').textContent='SHOW MINED';
-  document.getElementById('toggleMinedBtn').classList.remove('active');
+  document.getElementById('toggleValuesBtn').textContent='SHOW VALUES';document.getElementById('toggleValuesBtn').classList.remove('active');
+  document.getElementById('toggleMinedBtn').textContent='SHOW MINED';document.getElementById('toggleMinedBtn').classList.remove('active');
   document.getElementById('dayValue').textContent='1';
   document.getElementById('remainingValue').textContent=Object.values(gameState.cells).reduce((s,c)=>s+c.anova,0).toLocaleString();
   ['destroyedValue','minedValue','lostValue'].forEach(id=>document.getElementById(id).textContent='0');
-  renderPlanet();renderTeams();renderLeaderboard();renderTrancheVisual();updateHeaderTranche();updateActionPanel();
+  renderPlanet();renderTeams();renderLeaderboard();renderClusterVisual();updateHeaderCluster();updateActionPanel();
   addLog('🔄 New game started!','move');
 }
 
-// ─── Save / Load ─────────────────────────────────────────────────────────────
+// ─── Save / Load ──────────────────────────────────────────────────────────────
 function saveGame() {
-  const blob=new Blob([JSON.stringify({version:2,timestamp:new Date().toISOString(),gameState,showingValues,showingMined},null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');a.href=url;a.download=`anova-save-${new Date().toISOString().slice(0,10)}.json`;
+  const blob=new Blob([JSON.stringify({version:3,timestamp:new Date().toISOString(),gameState,showingValues,showingMined},null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download=`anova-save-${new Date().toISOString().slice(0,10)}.json`;
   document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
   addLog('Game saved','move');
 }
 
 function loadGame(event) {
-  const file=event.target.files[0];
-  if (!file) return;
+  const file=event.target.files[0];if(!file)return;
   const reader=new FileReader();
   reader.onload=e=>{
-    try {
-      const save=JSON.parse(e.target.result);
-      if (!save.gameState){alert('Invalid save file');return;}
+    try{
+      const save=JSON.parse(e.target.result);if(!save.gameState){alert('Invalid save file');return;}
       gameState=save.gameState;showingValues=save.showingValues||false;showingMined=save.showingMined||false;
-      document.getElementById('toggleValuesBtn').textContent=showingValues?'HIDE VALUES':'SHOW VALUES';
-      document.getElementById('toggleValuesBtn').classList.toggle('active',showingValues);
-      document.getElementById('toggleMinedBtn').textContent=showingMined?'HIDE MINED':'SHOW MINED';
-      document.getElementById('toggleMinedBtn').classList.toggle('active',showingMined);
+      // migrate old saves: trancheContributions → clusterContributions
+      if(!gameState.clusterContributions&&gameState.trancheContributions) gameState.clusterContributions=gameState.trancheContributions;
+      if(!gameState.clusterContributions) gameState.clusterContributions={};
+      document.getElementById('toggleValuesBtn').textContent=showingValues?'HIDE VALUES':'SHOW VALUES';document.getElementById('toggleValuesBtn').classList.toggle('active',showingValues);
+      document.getElementById('toggleMinedBtn').textContent=showingMined?'HIDE MINED':'SHOW MINED';document.getElementById('toggleMinedBtn').classList.toggle('active',showingMined);
       document.getElementById('dayValue').textContent=gameState.currentDay;
-      renderPlanet();renderTeams();renderLeaderboard();renderLog();renderTrancheVisual();updateTotals();updateHeaderTranche();updateActionPanel();
+      renderPlanet();renderTeams();renderLeaderboard();renderLog();renderClusterVisual();updateTotals();updateHeaderCluster();updateActionPanel();
       addLog('Game loaded','move');
-    } catch(err){alert('Error: '+err.message);}
+    }catch(err){alert('Error: '+err.message);}
   };
-  reader.readAsText(file);
-  event.target.value='';
+  reader.readAsText(file);event.target.value='';
 }
 
 // ─── Boot ─────────────────────────────────────────────────────────────────────
@@ -872,8 +809,8 @@ generateSudokuGrid();
 initializeCells();
 renderPlanet();
 renderLeaderboard();
-renderTrancheVisual();
-updateHeaderTranche();
+renderClusterVisual();
+updateHeaderCluster();
 updateTotals();
 document.getElementById('teamNameInput').addEventListener('keypress',e=>{if(e.key==='Enter')createTeam();});
 </script>
