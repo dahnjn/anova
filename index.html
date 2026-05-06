@@ -520,7 +520,7 @@ function updateHeaderCluster() {
   const used=Object.values(contrib).reduce((s,v)=>s+v,0),rem=100-used;
   if(rem>0)barH+=`<div class="current-cluster-segment" style="width:${rem}%;background:rgba(255,255,255,0.15);color:#fff">${rem}</div>`;
   document.getElementById('currentClusterBar').innerHTML=barH;
-  document.getElementById('currentClusterLegend').innerHTML=legH;
+  document.getElementById('currentClusterLegend').innerHTML='';
 }
 
 function updateTotals() {
