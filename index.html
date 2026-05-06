@@ -17,9 +17,7 @@ h1{font-family:'IBM Plex Mono',monospace;font-size:4.6rem;font-weight:700;letter
 .day-value{color:#00ffff;text-shadow:0 0 20px rgba(0,255,255,0.5)}
 .destroyed-value{color:#ff4444;text-shadow:0 0 20px rgba(255,68,68,0.5)}
 .header-current-cluster{margin-top:8px;text-align:center;min-width:350px}
-.current-cluster-label{font-family:'Courier New',Courier,monospace;font-size:0.85rem;color:#888;margin-bottom:6px}
-.current-cluster-label span:first-of-type{color:#fff;font-weight:700;font-size:1rem}
-.current-cluster-penalty{color:#ff4444!important;font-weight:400!important}
+.current-cluster-penalty-display{font-family:'IBM Plex Mono',monospace;font-size:1.4rem;font-weight:700;color:#ff4444;text-shadow:0 0 12px rgba(255,68,68,0.7);white-space:nowrap;min-width:60px;text-align:left}
 .current-cluster-bar-container{height:28px;background:rgba(255,255,255,0.08);border-radius:6px;overflow:hidden;border:2px solid rgba(255,255,255,0.3);display:flex;backdrop-filter:blur(10px);box-shadow:0 2px 8px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.2),inset 0 -1px 0 rgba(0,0,0,0.1)}
 .current-cluster-bar{display:flex;height:100%;width:100%}
 .current-cluster-segment{height:100%;min-width:2px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:0.9rem;font-weight:700;color:#000}
@@ -210,8 +208,10 @@ h1{font-family:'IBM Plex Mono',monospace;font-size:4.6rem;font-weight:700;letter
       <div class="header-stat-row"><span class="stat-label">TOTAL LOST</span><span class="stat-value" style="color:#888" id="lostValue">0</span></div>
     </div>
     <div class="header-current-cluster">
-      <div class="current-cluster-label">CURRENT CLUSTER: <span id="currentClusterRange">1-100</span> <span class="current-cluster-penalty" id="currentClusterPenalty">(-10)</span></div>
-      <div class="current-cluster-bar-container"><div class="current-cluster-bar" id="currentClusterBar"></div></div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="current-cluster-bar-container" style="flex:1"><div class="current-cluster-bar" id="currentClusterBar"></div></div>
+        <div class="current-cluster-penalty-display" id="currentClusterPenalty">-10</div>
+      </div>
       <div class="current-cluster-legend" id="currentClusterLegend"></div>
     </div>
   </header>
@@ -463,8 +463,9 @@ function renderTeams() {
 
 function renderLeaderboard() {
   document.getElementById('leaderboard').innerHTML=[...gameState.teams].sort((a,b)=>(b.extracted-b.penalties)-(a.extracted-a.penalties)).map((t,i)=>{
-    const s=t.extracted-t.penalties,p=t.penalties>0?` <span style="color:#ff8800;font-size:0.6rem">(-${t.penalties})</span>`:'';
-    return `<div class="leaderboard-entry ${i===0?'leader':''}"><span>${i+1}. ${t.name}</span><span style="color:${s>=0?'#00ff88':'#ff4444'}">▲ ${s}${p}</span></div>`;
+    const s=t.extracted-t.penalties;
+    const penStr=t.penalties>0?`<span style="color:#ff8800;min-width:60px;display:inline-block">-${t.penalties}</span>`:`<span style="min-width:60px;display:inline-block"></span>`;
+    return `<div class="leaderboard-entry ${i===0?'leader':''}"><span>${i+1}. ${t.name}</span><span style="display:flex;align-items:center;gap:4px;font-variant-numeric:tabular-nums">${penStr}<span style="color:${s>=0?'#00ff88':'#ff4444'};min-width:40px;text-align:right">▲ ${s}</span></span></div>`;
   }).join('');
   updateTotals();
 }
@@ -507,10 +508,8 @@ function updateActionPanel() {
 
 function updateHeaderCluster() {
   const total=gameState.teams.reduce((s,t)=>s+t.destroyed,0),ti=Math.floor(total/100);
-  const rs=ti*100+1,re=(ti+1)*100;
   const pen=gameConfig.penaltyType==='add'?gameConfig.basePenalty+ti*gameConfig.penaltyAdd:Math.round(gameConfig.basePenalty*Math.pow(gameConfig.penaltyMultiply,ti));
-  document.getElementById('currentClusterRange').textContent=`${rs.toLocaleString()}-${re.toLocaleString()}`;
-  document.getElementById('currentClusterPenalty').textContent=`(-${pen})`;
+  document.getElementById('currentClusterPenalty').textContent=`-${pen}`;
   const contrib=gameState.clusterContributions[ti]||{};
   const sorted=gameState.teams.map(t=>({t,c:contrib[t.id]||0})).filter(x=>x.c>0).sort((a,b)=>a.c-b.c);
   let barH='',legH='';
