@@ -89,8 +89,7 @@ h1{font-family:'IBM Plex Mono',monospace;font-size:4.6rem;font-weight:700;letter
 .log-entry.destroy{border-color:#ff4444}
 .log-entry.move{border-color:#00ffff}
 .leaderboard{margin-top:8px}
-.leaderboard-entry{display:flex;justify-content:space-between;padding:12px 14px;background:#1a1a24;border-radius:6px;margin-bottom:6px;font-family:'IBM Plex Mono',monospace;font-size:1.25rem;font-weight:600}
-.leaderboard-entry.leader{border:2px solid #00ff88}
+.leaderboard-entry{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#1a1a24;border-radius:6px;margin-bottom:6px;font-family:'IBM Plex Mono',monospace;font-size:1.1rem;font-weight:600;gap:12px;overflow:hidden}
 .no-team-selected{color:#666;text-align:center;padding:20px 10px;font-style:italic}
 .end-game-btn{width:100%;background:#ff444433;color:#ff4444;border:1px solid #ff4444;padding:7px}
 .end-game-btn:hover{background:#ff444466}
@@ -463,8 +462,11 @@ function renderTeams() {
 function renderLeaderboard() {
   document.getElementById('leaderboard').innerHTML=[...gameState.teams].sort((a,b)=>(b.extracted-b.penalties)-(a.extracted-a.penalties)).map((t,i)=>{
     const s=t.extracted-t.penalties;
-    const penStr=t.penalties>0?`<span style="color:#ff8800;min-width:60px;display:inline-block">-${t.penalties}</span>`:`<span style="min-width:60px;display:inline-block"></span>`;
-    return `<div class="leaderboard-entry ${i===0?'leader':''}"><span>${i+1}. ${t.name}</span><span style="display:flex;align-items:center;gap:4px;font-variant-numeric:tabular-nums">${penStr}<span style="color:${s>=0?'#00ff88':'#ff4444'};min-width:40px;text-align:right">▲ ${s}</span></span></div>`;
+    const penStr=t.penalties>0?`<span style="color:#ff8800;font-variant-numeric:tabular-nums;margin-right:8px">-${t.penalties}</span>`:``;
+    return `<div class="leaderboard-entry ${i===0?'leader':''}">
+      <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0">${i+1}.&nbsp;${t.name}</span>
+      <span style="display:flex;align-items:center;gap:4px;white-space:nowrap;flex-shrink:0">${penStr}<span style="color:${s>=0?'#00ff88':'#ff4444'};font-variant-numeric:tabular-nums">▲&nbsp;${s}</span></span>
+    </div>`;
   }).join('');
   updateTotals();
 }
